@@ -1,371 +1,946 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eu Mereço Doce — Sistema</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --rosa: #D4829A;
-    --rosa-claro: #F2C4D0;
-    --rosa-escuro: #A85570;
-    --dourado: #C9A75A;
-    --dourado-cl: #E8CC8A;
-    --verde: #4CAF7A;
-    --marrom: #5C2E1A;
-    --marrom-md: #8B4A2E;
-    --creme: #FBF6F0;
-    --bege: #EDE0D0;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GastroCore — Stock Control for UK Restaurants</title>
+  <meta name="description" content="GastroCore is the smart stock control and kitchen management platform built for UK restaurants. Natasha's Law compliant. Start free for 14 days." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #080e1c;
+      --navy2: #0d1629;
+      --navy3: #111e35;
+      --primary: #3b82f6;
+      --primary-light: #60a5fa;
+      --primary-glow: rgba(59,130,246,0.15);
+      --accent: #06b6d4;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #475569;
+      --border: rgba(255,255,255,0.07);
+      --border-light: rgba(255,255,255,0.12);
+      --card: rgba(255,255,255,0.03);
+      --card-hover: rgba(255,255,255,0.06);
+    }
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: #0A0503;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
+    html { scroll-behavior: smooth; }
 
-  /* Background glow */
-  body::before {
-    content: '';
-    position: fixed;
-    top: -30%;
-    left: -20%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(ellipse, rgba(212,130,154,.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -20%;
-    right: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(ellipse, rgba(201,167,90,.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-  /* LOGO */
-  .logo-wrap {
-    text-align: center;
-    margin-bottom: 3rem;
-    animation: fadeUp .6s ease both;
-  }
-  .logo-icon {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg, var(--marrom), var(--marrom-md));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
-    margin: 0 auto 1rem;
-    box-shadow: 0 8px 32px rgba(92,46,26,.4);
-  }
-  .logo-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--creme);
-    line-height: 1;
-  }
-  .logo-sub {
-    font-size: .72rem;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: #444;
-    margin-top: .4rem;
-  }
+    /* NOISE TEXTURE */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
 
-  /* TAGLINE */
-  .tagline {
-    text-align: center;
-    color: #555;
-    font-size: .85rem;
-    margin-bottom: 2.5rem;
-    animation: fadeUp .6s .1s ease both;
-  }
+    /* GRID BACKGROUND */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* CARDS GRID */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.2rem;
-    width: 100%;
-    max-width: 880px;
-    animation: fadeUp .6s .2s ease both;
-  }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,14,28,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
 
-  .card {
-    background: #140806;
-    border: 1px solid #2E1409;
-    border-radius: 22px;
-    padding: 2rem 1.8rem;
-    text-decoration: none;
-    color: var(--creme);
-    display: flex;
-    flex-direction: column;
-    gap: .9rem;
-    transition: transform .22s, box-shadow .22s, border-color .22s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity .22s;
-  }
-  .card:hover { transform: translateY(-5px); }
-  .card:active { transform: scale(.98); }
+    .nav-logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--primary); }
 
-  /* Color accents per card */
-  .card.cliente  { border-color: rgba(212,130,154,.3); }
-  .card.cliente:hover  { box-shadow: 0 16px 48px rgba(212,130,154,.18); border-color: var(--rosa); }
-  .card.cliente::before  { background: radial-gradient(ellipse at top left, rgba(212,130,154,.08), transparent 60%); }
-  .card.cliente:hover::before { opacity: 1; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
 
-  .card.admin  { border-color: rgba(201,167,90,.3); }
-  .card.admin:hover  { box-shadow: 0 16px 48px rgba(201,167,90,.18); border-color: var(--dourado); }
-  .card.admin::before  { background: radial-gradient(ellipse at top left, rgba(201,167,90,.08), transparent 60%); }
-  .card.admin:hover::before { opacity: 1; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
 
-  .card.cozinha  { border-color: rgba(76,175,122,.3); }
-  .card.cozinha:hover  { box-shadow: 0 16px 48px rgba(76,175,122,.18); border-color: var(--verde); }
-  .card.cozinha::before  { background: radial-gradient(ellipse at top left, rgba(76,175,122,.08), transparent 60%); }
-  .card.cozinha:hover::before { opacity: 1; }
+    .nav-cta {
+      background: var(--primary);
+      color: white !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      font-size: 0.875rem !important;
+      transition: background 0.2s, transform 0.1s !important;
+    }
+    .nav-cta:hover { background: #2563eb !important; transform: translateY(-1px); }
 
-  .card-icon {
-    width: 52px; height: 52px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem;
-    flex-shrink: 0;
-  }
-  .icon-cliente  { background: rgba(212,130,154,.15); }
-  .icon-admin    { background: rgba(201,167,90,.15); }
-  .icon-cozinha  { background: rgba(76,175,122,.15); }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
 
-  .card-label {
-    font-size: .65rem;
-    font-weight: 700;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    margin-bottom: .1rem;
-  }
-  .label-cliente  { color: var(--rosa); }
-  .label-admin    { color: var(--dourado); }
-  .label-cozinha  { color: var(--verde); }
+    /* SECTIONS */
+    section { position: relative; z-index: 1; }
 
-  .card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.55rem;
-    font-weight: 700;
-    color: var(--creme);
-    line-height: 1.1;
-  }
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .card-desc {
-    font-size: .8rem;
-    color: #666;
-    line-height: 1.6;
-  }
+    .hero-glow {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-  .card-features {
-    display: flex;
-    flex-direction: column;
-    gap: .3rem;
-    margin-top: .2rem;
-  }
-  .feat {
-    font-size: .75rem;
-    color: #444;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-  .feat::before { content: '›'; color: #333; font-size: 1rem; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      color: var(--primary-light);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.3rem 0.85rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+      animation: fadeUp 0.6s ease both;
+    }
 
-  .card-arrow {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 1rem;
-    border-top: 1px solid #1A0B06;
-  }
-  .arrow-label {
-    font-size: .75rem;
-    font-weight: 600;
-  }
-  .label-cl { color: var(--rosa); }
-  .label-ad { color: var(--dourado); }
-  .label-co { color: var(--verde); }
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
 
-  .arrow-icon {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: .9rem;
-    transition: transform .2s;
-  }
-  .card:hover .arrow-icon { transform: translateX(4px); }
-  .ai-cl { background: rgba(212,130,154,.15); color: var(--rosa); }
-  .ai-ad { background: rgba(201,167,90,.15); color: var(--dourado); }
-  .ai-co { background: rgba(76,175,122,.15); color: var(--verde); }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary-light);
+    }
 
-  /* FOOTER */
-  .footer {
-    margin-top: 2.5rem;
-    text-align: center;
-    font-size: .72rem;
-    color: #2E1409;
-    animation: fadeUp .6s .3s ease both;
-  }
-  .footer span { color: #3D1F14; }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
 
-  /* DIVIDER */
-  .divider {
-    width: 40px; height: 1px;
-    background: #2E1409;
-    margin: .5rem auto;
-  }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
 
-  /* INSTRUCTION NOTE */
-  .note {
-    background: #140806;
-    border: 1px solid #2E1409;
-    border-radius: 14px;
-    padding: 1rem 1.3rem;
-    max-width: 880px;
-    width: 100%;
-    margin-top: 1.2rem;
-    display: flex;
-    align-items: flex-start;
-    gap: .8rem;
-    animation: fadeUp .6s .3s ease both;
-  }
-  .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
-  .note-text { font-size: .75rem; color: #555; line-height: 1.65; }
-  .note-text strong { color: #888; }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: none; }
-  }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      text-decoration: none;
+      border: 1px solid var(--border-light);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); background: var(--card); }
 
-  @media (max-width: 600px) {
-    .logo-name { font-size: 1.8rem; }
-    .cards { grid-template-columns: 1fr; }
-  }
-</style>
+    .hero-note {
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    /* LOGOS BAR */
+    .logos-bar {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logos-bar p {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .logos-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .logo-item {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 7rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      max-width: 600px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 500px;
+      font-weight: 300;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--navy);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: var(--navy3); }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary-glow);
+      border: 1px solid rgba(59,130,246,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* COMPLIANCE */
+    .compliance {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .compliance-inner {
+      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.05) 100%);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 20px;
+      padding: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .compliance-inner { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+    }
+
+    .compliance h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .compliance p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .compliance-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .compliance-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .compliance-list li::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.05rem;
+      flex-shrink: 0;
+    }
+
+    /* PRICING */
+    .pricing {
+      padding: 7rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+      text-align: left;
+    }
+
+    @media (max-width: 640px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .pricing-card.featured {
+      border-color: rgba(59,130,246,0.4);
+      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, var(--card) 100%);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.9rem;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .pricing-plan {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .pricing-price {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .pricing-price span {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0;
+    }
+
+    .pricing-vat {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-equiv {
+      font-size: 0.82rem;
+      color: var(--primary-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .pricing-cta {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+    }
+
+    .pricing-cta-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+    .pricing-cta-primary:hover { background: #2563eb; transform: translateY(-1px); }
+
+    .pricing-cta-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+    .pricing-cta-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+
+    /* FAQ */
+    .faq {
+      padding: 7rem 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      margin-top: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--primary-light); }
+
+    .faq-icon {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+    }
+
+    .faq-answer p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding-bottom: 1.4rem;
+      font-weight: 300;
+    }
+
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--primary); }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 6rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .footer-logo span { color: var(--primary); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MONO */
+    .mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.15);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="logo-wrap">
-    <div class="logo-icon">🍰</div>
-    <div class="logo-name">Eu Mereço Doce</div>
-    <div class="logo-sub">Sistema de Pedidos</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">GASTRO<span>CORE</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://app.gastrocore.co.uk/login" class="nav-cta">Sign in</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">🇬🇧 Built for UK Restaurants · Natasha's Law Compliant</div>
+  <h1>Stock control that<br /><em>actually works</em> for<br />your kitchen</h1>
+  <p>GastroCore gives independent restaurants and hospitality groups complete control over ingredients, recipes, waste, and costs — from one simple dashboard.</p>
+  <div class="hero-ctas">
+    <a href="https://rad-halva-4ad49b.netlify.app/registro" class="btn-primary">Start free 14-day trial →</a>
+    <a href="#features" class="btn-ghost">See what's included</a>
   </div>
+  <p class="hero-note">No credit card required &nbsp;·&nbsp; Setup in under 5 minutes &nbsp;·&nbsp; Cancel anytime</p>
+</section>
 
-  <div class="tagline">Escolha a tela que deseja acessar</div>
-
-  <div class="cards">
-
-    <!-- CLIENTE -->
-    <a class="card cliente" href="cliente.html">
-      <div style="display:flex;align-items:center;gap:.9rem">
-        <div class="card-icon icon-cliente">🛍️</div>
-        <div>
-          <div class="card-label label-cliente">Acesso público</div>
-          <div class="card-title">Cardápio do Cliente</div>
-        </div>
-      </div>
-      <div class="card-desc">Tela que o cliente usa para navegar pelo cardápio, personalizar e fazer o pedido.</div>
-      <div class="card-features">
-        <div class="feat">Cardápio com todos os produtos</div>
-        <div class="feat">Customização de sabor, tamanho e recheio</div>
-        <div class="feat">Upload de foto para decoração</div>
-        <div class="feat">Pagamento via Pix, Cartão ou Dinheiro</div>
-        <div class="feat">Acompanhamento do status em tempo real</div>
-      </div>
-      <div class="card-arrow">
-        <span class="arrow-label label-cl">Abrir Cardápio →</span>
-        <div class="arrow-icon ai-cl">›</div>
-      </div>
-    </a>
-
-    <!-- ADMIN -->
-    <a class="card admin" href="admin.html">
-      <div style="display:flex;align-items:center;gap:.9rem">
-        <div class="card-icon icon-admin">⚙️</div>
-        <div>
-          <div class="card-label label-admin">Acesso restrito</div>
-          <div class="card-title">Painel Administrativo</div>
-        </div>
-      </div>
-      <div class="card-desc">Painel touchscreen para a equipe gerenciar pedidos e acompanhar pagamentos.</div>
-      <div class="card-features">
-        <div class="feat">Aceitar ou recusar pedidos</div>
-        <div class="feat">Alerta sonoro para pedidos novos</div>
-        <div class="feat">Envio automático para a TV da cozinha</div>
-        <div class="feat">Aba de pagamentos: Pix, Cartão, Dinheiro</div>
-        <div class="feat">Marcar pedidos como pagos</div>
-      </div>
-      <div class="card-arrow">
-        <span class="arrow-label label-ad">Abrir Admin →</span>
-        <div class="arrow-icon ai-ad">›</div>
-      </div>
-    </a>
-
-    <!-- COZINHA -->
-    <a class="card cozinha" href="cozinha.html">
-      <div style="display:flex;align-items:center;gap:.9rem">
-        <div class="card-icon icon-cozinha">📺</div>
-        <div>
-          <div class="card-label label-cozinha">TV da cozinha</div>
-          <div class="card-title">Painel da Cozinha</div>
-        </div>
-      </div>
-      <div class="card-desc">Tela para projetar na TV. Mostra os pedidos em andamento para a equipe de produção.</div>
-      <div class="card-features">
-        <div class="feat">Pedidos em preparo em destaque</div>
-        <div class="feat">Pedidos prontos aguardando retirada</div>
-        <div class="feat">Nome, sabor, tamanho e horário visíveis</div>
-        <div class="feat">Sem botões — apenas visualização</div>
-        <div class="feat">Atualiza automaticamente em tempo real</div>
-      </div>
-      <div class="card-arrow">
-        <span class="arrow-label label-co">Abrir TV →</span>
-        <div class="arrow-icon ai-co">›</div>
-      </div>
-    </a>
-
+<!-- LOGOS BAR -->
+<div class="logos-bar">
+  <p>Trusted by forward-thinking restaurants</p>
+  <div class="logos-row">
+    <span class="logo-item">🍽 Fine Dining</span>
+    <span class="logo-item">🍕 Casual Dining</span>
+    <span class="logo-item">☕ Cafés</span>
+    <span class="logo-item">🥡 Takeaways</span>
+    <span class="logo-item">🍺 Pubs & Bars</span>
   </div>
+</div>
 
-  <div class="note">
-    <div class="note-icon">💡</div>
-    <div class="note-text">
-      <strong>Como usar:</strong> mantenha os 4 arquivos (<code>cliente.html</code>, <code>admin.html</code>, <code>cozinha.html</code> e <code>shared.js</code>) na mesma pasta que este arquivo.
-      Abra o <strong>Cardápio</strong> no celular do cliente, o <strong>Admin</strong> no iPad da confeitaria e a <strong>TV</strong> no televisor da cozinha.
-      Os pedidos se comunicam em tempo real entre as telas. Para funcionar entre dispositivos diferentes, hospede os arquivos online.
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="reveal">
+    <p class="section-label">Everything you need</p>
+    <h2 class="section-title">Your kitchen. Under control.</h2>
+    <p class="section-subtitle">Built from the ground up for UK hospitality — not adapted from something else.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Ingredient Management</h3>
+      <p>Track stock levels in real time. Set minimum quantities, get low-stock alerts by email, and manage expiry dates automatically.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Recipe Costing</h3>
+      <p>Calculate recipe costs automatically. Track margins, apply VAT (20% hot / 0% cold & takeaway), and generate PDF recipe cards with allergens.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏷</div>
+      <h3>14 UK Allergens</h3>
+      <p>Full Natasha's Law compliance. Flag all 14 mandatory allergens per recipe. Generate allergen reports for your front-of-house team.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">♻️</div>
+      <h3>Food Waste Tracking</h3>
+      <p>Log waste with reasons and costs. Spot patterns, reduce losses, and improve profitability — one of the biggest cost leaks in hospitality.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛒</div>
+      <h3>Purchase Orders</h3>
+      <p>Create purchase orders, receive stock, and auto-update inventory. Smart suggestions based on minimum stock levels and usage history.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Batch Traceability</h3>
+      <p>Track every batch from supplier to plate. Full audit trail for food safety inspections and allergen investigations.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Reports & Analytics</h3>
+      <p>Consumption reports, margin analysis, low-stock summaries, and cost breakdowns — everything your accountant and EHO will love.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Team Management</h3>
+      <p>Invite your team with role-based permissions. Owner, manager, and staff roles with granular access control.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📧</div>
+      <h3>Email Alerts</h3>
+      <p>Automated alerts for low stock, expiring ingredients, and batch recalls. Stay informed without logging in every day.</p>
     </div>
   </div>
+</section>
 
-  <div class="footer">
-    <div class="divider"></div>
-    Eu Mereço Doce · Londrina · <span>Sistema v3.0</span>
+<!-- COMPLIANCE -->
+<section class="compliance">
+  <div class="compliance-inner reveal">
+    <div>
+      <p class="section-label">UK Compliance</p>
+      <h2>Built around<br />Natasha's Law</h2>
+      <p style="margin-top:1rem;">Natasha's Law (October 2021) requires all food businesses in England, Wales, and Northern Ireland to label every pre-packaged food with a full ingredients list and allergen information. GastroCore makes compliance effortless.</p>
+    </div>
+    <ul class="compliance-list">
+      <li>All 14 mandatory UK allergens tracked per recipe</li>
+      <li>Allergen PDF reports for front-of-house</li>
+      <li>Batch traceability for full audit trail</li>
+      <li>VAT correctly applied (20% hot / 0% cold & takeaway)</li>
+      <li>Supplier records linked to every ingredient</li>
+      <li>Expiry date tracking with automated alerts</li>
+      <li>EHO-ready reports at any time</li>
+    </ul>
   </div>
+</section>
 
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <p class="section-label">Simple pricing</p>
+    <h2 class="section-title" style="margin:0 auto 1rem;">One plan. Everything included.</h2>
+    <p class="section-subtitle" style="margin:0 auto;">No hidden fees, no feature tiers. Every GastroCore feature is included from day one.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <!-- Monthly -->
+    <div class="pricing-card">
+      <p class="pricing-plan">Monthly</p>
+      <div class="pricing-price">£59<span>/mo</span></div>
+      <p class="pricing-vat">VAT included</p>
+      <hr class="pricing-divider" />
+      <ul class="pricing-features">
+        <li>Unlimited ingredients</li>
+        <li>Recipes + PDF + Allergens</li>
+        <li>Food Waste tracking</li>
+        <li>Purchase orders</li>
+        <li>Batch traceability</li>
+        <li>Full reports</li>
+        <li>Email alerts</li>
+        <li>Team management</li>
+      </ul>
+      <a href="https://rad-halva-4ad49b.netlify.app/registro" class="pricing-cta pricing-cta-ghost">Start free trial</a>
+    </div>
+    <!-- Annual -->
+    <div class="pricing-card featured">
+      <div class="pricing-badge">SAVE 25%</div>
+      <p class="pricing-plan">Annual</p>
+      <div class="pricing-price">£531<span>/yr</span></div>
+      <p class="pricing-vat">VAT included</p>
+      <p class="pricing-equiv">Equivalent to £44.25/mo</p>
+      <hr class="pricing-divider" />
+      <ul class="pricing-features">
+        <li>Unlimited ingredients</li>
+        <li>Recipes + PDF + Allergens</li>
+        <li>Food Waste tracking</li>
+        <li>Purchase orders</li>
+        <li>Batch traceability</li>
+        <li>Full reports</li>
+        <li>Email alerts</li>
+        <li>Team management</li>
+      </ul>
+      <a href="https://rad-halva-4ad49b.netlify.app/registro" class="pricing-cta pricing-cta-primary">Start free trial →</a>
+    </div>
+  </div>
+  <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-dim);">14-day free trial on all plans · No credit card required · Cancel anytime</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="reveal">
+    <p class="section-label">Questions</p>
+    <h2 class="section-title">Frequently asked</h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-question">Do I need a credit card to start? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>No. Your 14-day free trial starts immediately with no payment details required. You only need to subscribe when your trial ends if you want to continue.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is GastroCore compliant with Natasha's Law? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Yes. GastroCore tracks all 14 mandatory UK allergens per recipe and generates allergen PDF reports for your team and customers. We stay up to date with UK food labelling legislation.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">How is VAT handled? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>GastroCore automatically applies the correct UK VAT rate per recipe — 20% for hot food and 0% for cold food and takeaways. This is reflected in your recipe costing and margin reports.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Can I invite my team? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Yes. You can invite unlimited team members with role-based permissions — Owner, Manager, or Staff. Each role has appropriate access to features and data.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Can I cancel anytime? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Absolutely. You can cancel your subscription at any time from the billing portal inside GastroCore. No long-term contracts, no cancellation fees.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is my data secure? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Yes. GastroCore runs on enterprise-grade infrastructure (Render + PostgreSQL) with encrypted connections and secure JWT authentication. Your data is backed up automatically.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="reveal">
+    <h2>Ready to take control<br />of your kitchen?</h2>
+    <p>Start your free 14-day trial today. No credit card needed.</p>
+    <a href="https://rad-halva-4ad49b.netlify.app/registro" class="btn-primary" style="font-size:1.05rem; padding:0.9rem 2.2rem;">Get started free →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GASTRO<span>CORE</span></div>
+  <ul class="footer-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://app.gastrocore.co.uk/login">Sign in</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 GastroCore · gastrocore.co.uk · All rights reserved</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
 </body>
 </html>
