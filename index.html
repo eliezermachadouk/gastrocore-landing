@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eu Mereço Doce — Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rosa: #D4829A;
+    --rosa-claro: #F2C4D0;
+    --rosa-escuro: #A85570;
+    --dourado: #C9A75A;
+    --dourado-cl: #E8CC8A;
+    --verde: #4CAF7A;
+    --marrom: #5C2E1A;
+    --marrom-md: #8B4A2E;
+    --creme: #FBF6F0;
+    --bege: #EDE0D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #0A0503;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(212,130,154,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(201,167,90,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* LOGO */
+  .logo-wrap {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeUp .6s ease both;
+  }
+  .logo-icon {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--marrom), var(--marrom-md));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 8px 32px rgba(92,46,26,.4);
+  }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #444;
+    margin-top: .4rem;
+  }
+
+  /* TAGLINE */
+  .tagline {
+    text-align: center;
+    color: #555;
+    font-size: .85rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+
+  /* CARDS GRID */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 880px;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .card {
+    background: #140806;
+    border: 1px solid #2E1409;
+    border-radius: 22px;
+    padding: 2rem 1.8rem;
+    text-decoration: none;
+    color: var(--creme);
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    transition: transform .22s, box-shadow .22s, border-color .22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .22s;
+  }
+  .card:hover { transform: translateY(-5px); }
+  .card:active { transform: scale(.98); }
+
+  /* Color accents per card */
+  .card.cliente  { border-color: rgba(212,130,154,.3); }
+  .card.cliente:hover  { box-shadow: 0 16px 48px rgba(212,130,154,.18); border-color: var(--rosa); }
+  .card.cliente::before  { background: radial-gradient(ellipse at top left, rgba(212,130,154,.08), transparent 60%); }
+  .card.cliente:hover::before { opacity: 1; }
+
+  .card.admin  { border-color: rgba(201,167,90,.3); }
+  .card.admin:hover  { box-shadow: 0 16px 48px rgba(201,167,90,.18); border-color: var(--dourado); }
+  .card.admin::before  { background: radial-gradient(ellipse at top left, rgba(201,167,90,.08), transparent 60%); }
+  .card.admin:hover::before { opacity: 1; }
+
+  .card.cozinha  { border-color: rgba(76,175,122,.3); }
+  .card.cozinha:hover  { box-shadow: 0 16px 48px rgba(76,175,122,.18); border-color: var(--verde); }
+  .card.cozinha::before  { background: radial-gradient(ellipse at top left, rgba(76,175,122,.08), transparent 60%); }
+  .card.cozinha:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .icon-cliente  { background: rgba(212,130,154,.15); }
+  .icon-admin    { background: rgba(201,167,90,.15); }
+  .icon-cozinha  { background: rgba(76,175,122,.15); }
+
+  .card-label {
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: .1rem;
+  }
+  .label-cliente  { color: var(--rosa); }
+  .label-admin    { color: var(--dourado); }
+  .label-cozinha  { color: var(--verde); }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1.1;
+  }
+
+  .card-desc {
+    font-size: .8rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .card-features {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    margin-top: .2rem;
+  }
+  .feat {
+    font-size: .75rem;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .feat::before { content: '›'; color: #333; font-size: 1rem; }
+
+  .card-arrow {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #1A0B06;
+  }
+  .arrow-label {
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  .label-cl { color: var(--rosa); }
+  .label-ad { color: var(--dourado); }
+  .label-co { color: var(--verde); }
+
+  .arrow-icon {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+    transition: transform .2s;
+  }
+  .card:hover .arrow-icon { transform: translateX(4px); }
+  .ai-cl { background: rgba(212,130,154,.15); color: var(--rosa); }
+  .ai-ad { background: rgba(201,167,90,.15); color: var(--dourado); }
+  .ai-co { background: rgba(76,175,122,.15); color: var(--verde); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: .72rem;
+    color: #2E1409;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .footer span { color: #3D1F14; }
+
+  /* DIVIDER */
+  .divider {
+    width: 40px; height: 1px;
+    background: #2E1409;
+    margin: .5rem auto;
+  }
+
+  /* INSTRUCTION NOTE */
+  .note {
+    background: #140806;
+    border: 1px solid #2E1409;
+    border-radius: 14px;
+    padding: 1rem 1.3rem;
+    max-width: 880px;
+    width: 100%;
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: .8rem;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+  .note-text { font-size: .75rem; color: #555; line-height: 1.65; }
+  .note-text strong { color: #888; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    .logo-name { font-size: 1.8rem; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <div class="logo-icon">🍰</div>
+    <div class="logo-name">Eu Mereço Doce</div>
+    <div class="logo-sub">Sistema de Pedidos</div>
+  </div>
+
+  <div class="tagline">Escolha a tela que deseja acessar</div>
+
+  <div class="cards">
+
+    <!-- CLIENTE -->
+    <a class="card cliente" href="cliente.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-cliente">🛍️</div>
+        <div>
+          <div class="card-label label-cliente">Acesso público</div>
+          <div class="card-title">Cardápio do Cliente</div>
+        </div>
+      </div>
+      <div class="card-desc">Tela que o cliente usa para navegar pelo cardápio, personalizar e fazer o pedido.</div>
+      <div class="card-features">
+        <div class="feat">Cardápio com todos os produtos</div>
+        <div class="feat">Customização de sabor, tamanho e recheio</div>
+        <div class="feat">Upload de foto para decoração</div>
+        <div class="feat">Pagamento via Pix, Cartão ou Dinheiro</div>
+        <div class="feat">Acompanhamento do status em tempo real</div>
+      </div>
+      <div class="card-arrow">
+        <span class="arrow-label label-cl">Abrir Cardápio →</span>
+        <div class="arrow-icon ai-cl">›</div>
+      </div>
+    </a>
+
+    <!-- ADMIN -->
+    <a class="card admin" href="admin.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-admin">⚙️</div>
+        <div>
+          <div class="card-label label-admin">Acesso restrito</div>
+          <div class="card-title">Painel Administrativo</div>
+        </div>
+      </div>
+      <div class="card-desc">Painel touchscreen para a equipe gerenciar pedidos e acompanhar pagamentos.</div>
+      <div class="card-features">
+        <div class="feat">Aceitar ou recusar pedidos</div>
+        <div class="feat">Alerta sonoro para pedidos novos</div>
+        <div class="feat">Envio automático para a TV da cozinha</div>
+        <div class="feat">Aba de pagamentos: Pix, Cartão, Dinheiro</div>
+        <div class="feat">Marcar pedidos como pagos</div>
+      </div>
+      <div class="card-arrow">
+        <span class="arrow-label label-ad">Abrir Admin →</span>
+        <div class="arrow-icon ai-ad">›</div>
+      </div>
+    </a>
+
+    <!-- COZINHA -->
+    <a class="card cozinha" href="cozinha.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-cozinha">📺</div>
+        <div>
+          <div class="card-label label-cozinha">TV da cozinha</div>
+          <div class="card-title">Painel da Cozinha</div>
+        </div>
+      </div>
+      <div class="card-desc">Tela para projetar na TV. Mostra os pedidos em andamento para a equipe de produção.</div>
+      <div class="card-features">
+        <div class="feat">Pedidos em preparo em destaque</div>
+        <div class="feat">Pedidos prontos aguardando retirada</div>
+        <div class="feat">Nome, sabor, tamanho e horário visíveis</div>
+        <div class="feat">Sem botões — apenas visualização</div>
+        <div class="feat">Atualiza automaticamente em tempo real</div>
+      </div>
+      <div class="card-arrow">
+        <span class="arrow-label label-co">Abrir TV →</span>
+        <div class="arrow-icon ai-co">›</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="note">
+    <div class="note-icon">💡</div>
+    <div class="note-text">
+      <strong>Como usar:</strong> mantenha os 4 arquivos (<code>cliente.html</code>, <code>admin.html</code>, <code>cozinha.html</code> e <code>shared.js</code>) na mesma pasta que este arquivo.
+      Abra o <strong>Cardápio</strong> no celular do cliente, o <strong>Admin</strong> no iPad da confeitaria e a <strong>TV</strong> no televisor da cozinha.
+      Os pedidos se comunicam em tempo real entre as telas. Para funcionar entre dispositivos diferentes, hospede os arquivos online.
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="divider"></div>
+    Eu Mereço Doce · Londrina · <span>Sistema v3.0</span>
+  </div>
+
+</body>
+</html>
