@@ -984,15 +984,9 @@
     <h2 class="section-title" style="margin:0 auto 1rem;">One plan. Everything included.</h2>
     <p class="section-subtitle" style="margin:0 auto;">No hidden fees, no feature tiers. Every GastroCore feature is included from day one.</p>
   </div>
-  <div style="display:flex; justify-content:center; margin-top:2.5rem;" class="reveal">
-    <div style="display:flex; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:4px; gap:4px;">
-      <button id="btn-monthly" onclick="setPlan('monthly')" style="padding:0.5rem 1.5rem; border-radius:7px; border:none; font-family:inherit; font-size:0.9rem; font-weight:500; cursor:pointer; background:#3b82f6; color:white; transition:all 0.2s;">Monthly</button>
-      <button id="btn-annual" onclick="setPlan('annual')" style="padding:0.5rem 1.5rem; border-radius:7px; border:none; font-family:inherit; font-size:0.9rem; font-weight:500; cursor:pointer; background:transparent; color:#94a3b8; transition:all 0.2s;">Annual <span style="font-size:0.75rem; color:#22c55e; margin-left:4px;">Save 25%</span></button>
-    </div>
-  </div>
   <div class="pricing-grid reveal">
     <!-- Monthly -->
-    <div class="pricing-card" id="lexus-monthly">
+    <div class="pricing-card">
       <p class="pricing-plan">Monthly</p>
       <div class="pricing-price">£59<span>/mo</span></div>
       <p class="pricing-vat">VAT included</p>
@@ -1010,7 +1004,7 @@
       <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-ghost">Start free trial</a>
     </div>
     <!-- Annual -->
-    <div class="pricing-card featured" id="lexus-annual" style="display:none;">
+    <div class="pricing-card featured">
       <div class="pricing-badge">SAVE 25%</div>
       <p class="pricing-plan">Annual</p>
       <div class="pricing-price">£531<span>/yr</span></div>
@@ -1115,21 +1109,6 @@
     });
   });
 
-  function setPlan(plan) {
-    const m = document.getElementById('lexus-monthly');
-    const a = document.getElementById('lexus-annual');
-    const bm = document.getElementById('btn-monthly');
-    const ba = document.getElementById('btn-annual');
-    if (plan === 'monthly') {
-      m.style.display = 'block'; a.style.display = 'none';
-      bm.style.background = '#3b82f6'; bm.style.color = 'white';
-      ba.style.background = 'transparent'; ba.style.color = '#94a3b8';
-    } else {
-      m.style.display = 'none'; a.style.display = 'block';
-      ba.style.background = '#3b82f6'; ba.style.color = 'white';
-      bm.style.background = 'transparent'; bm.style.color = '#94a3b8';
-    }
-  }
 </script>
 </body>
 </html>
