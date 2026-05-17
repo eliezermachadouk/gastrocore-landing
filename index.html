@@ -12,16 +12,23 @@
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="pganSslVvG_DLcr8m1ToG8oBZStTTwiK0Zl5EPuLyEM" />
   <link rel="canonical" href="https://gastrocore.co.uk" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gastrocore.co.uk" />
   <meta property="og:title" content="GastroCore - Stock Control for UK Restaurants" />
-  <meta property="og:description" content="Real-time stock control, recipe costing, food waste tracking and Natasha Law compliance. From £59 per month. 14-day free trial." />
+  <meta property="og:description" content="Real-time stock control, recipe costing, food waste tracking and Natasha Law compliance. From £59/month. 14-day free trial." />
+  <!-- TODO: replace og:image with a real 1200x630 screenshot of the landing page -->
   <meta property="og:image" content="https://gastrocore.co.uk/favicon_512x512.png" />
   <meta property="og:locale" content="en_GB" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="GastroCore - Stock Control for UK Restaurants" />
   <meta name="twitter:description" content="Real-time stock control and allergen compliance for UK restaurants. From £59 per month." />
   <meta name="twitter:image" content="https://gastrocore.co.uk/favicon_512x512.png" />
+  <!-- Security headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
@@ -1102,7 +1109,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-VCD558M675');
+    gtag('config', 'G-VCD558M675'); // GA measurement ID — intentionally public
   </script>
 </head>
 <body>
@@ -1115,7 +1122,7 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://app.gastrocore.co.uk/login" class="nav-cta">Sign in</a></li>
+    <li><a href="https://app.gastrocore.co.uk/login" class="nav-cta" rel="noopener noreferrer" target="_blank">Sign in</a></li>
   </ul>
 </nav>
 
@@ -1136,7 +1143,7 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary">Start free 14-day trial →</a>
+    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary" rel="noopener noreferrer" target="_blank">Start free 14-day trial →</a>
     <a href="#how-it-works" class="btn-ghost">See how it works</a>
   </div>
   <p class="hero-note">No credit card required &nbsp;·&nbsp; Setup in under 5 minutes &nbsp;·&nbsp; Cancel anytime</p>
@@ -1165,7 +1172,7 @@
             <!-- Main -->
             <div class="ds-main">
               <div class="ds-top">
-                <div class="ds-top-title">Dashboard — May 2026</div>
+                <div class="ds-top-title" id="ds-date">Dashboard</div>
                 <div class="ds-top-right">
                   <div class="ds-trial">⏱ 11 days left in trial</div>
                   <div class="ds-ava">EL</div>
@@ -1215,8 +1222,8 @@
                     <div class="ds-alerts" id="ds-alerts">
                       <div class="ds-alert red"><div class="ds-aico red">⚠</div><div><div class="ds-atitle">Low stock: Chicken Breast</div><div class="ds-asub">2 kg left · min 5 kg</div></div></div>
                       <div class="ds-alert red"><div class="ds-aico red">⚠</div><div><div class="ds-atitle">Low stock: Olive Oil</div><div class="ds-asub">0.5 L left · min 2 L</div></div></div>
-                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Milk expires tomorrow</div><div class="ds-asub">6 L · 16 May 2026</div></div></div>
-                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Cream expires in 2 days</div><div class="ds-asub">2 L · 17 May 2026</div></div></div>
+                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Milk expires tomorrow</div><div class="ds-asub">6 L · expires tomorrow</div></div></div>
+                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Cream expires in 2 days</div><div class="ds-asub">2 L · expires in 2 days</div></div></div>
                       <div class="ds-alert blue"><div class="ds-aico blue">📋</div><div><div class="ds-atitle">Purchase order suggested</div><div class="ds-asub">3 items below reorder level</div></div></div>
                     </div>
                   </div>
@@ -1485,7 +1492,7 @@
         <li>Batch traceability & EHO-ready reports</li>
       </ul>
       <div class="suite-price">£59<span>/month</span></div>
-      <a href="https://app.gastrocore.co.uk/registro" style="display:block; text-align:center; padding:0.85rem; border-radius:8px; background:#3b82f6; color:white; text-decoration:none; font-weight:500;">Start free 14-day trial →</a>
+      <a href="https://app.gastrocore.co.uk/registro" style="display:block; text-align:center; padding:0.85rem; border-radius:8px; background:#3b82f6; color:white; text-decoration:none; font-weight:500;" rel="noopener noreferrer" target="_blank">Start free 14-day trial →</a>
     </div>
   </div>
   <div class="suite-bundle reveal">
@@ -1504,9 +1511,9 @@
 <!-- ── COMPARISON (updated competitors) ── -->
 <section class="comparison">
   <div class="reveal">
-    <p class="section-label">vs competitors</p>
-    <h2 class="section-title">Why GastroCore wins.</h2>
-    <p class="section-subtitle">More features, lower cost, built for UK compliance.</p>
+    <p class="section-label">Why restaurants switch</p>
+    <h2 class="section-title">Built differently,<br>for UK kitchens.</h2>
+    <p class="section-subtitle">See how GastroCore compares to the alternatives UK restaurants are moving away from.</p>
   </div>
   <div class="reveal" style="overflow-x:auto;">
     <table class="comparison-table">
@@ -1550,7 +1557,7 @@
     <div class="feature-card">
       <div class="feature-icon">📋</div>
       <h3>Recipe Costing</h3>
-      <p>Calculate recipe costs automatically. Track margins, apply VAT (20% hot / 0% cold & takeaway), and generate PDF recipe cards with allergens.</p>
+      <p>Calculate recipe costs automatically. Track margins, apply correct UK food pricing rules, and generate PDF recipe cards with allergens.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🏷</div>
@@ -1604,7 +1611,7 @@
       <li>All 14 mandatory UK allergens tracked per recipe</li>
       <li>Allergen PDF reports for front-of-house — one click</li>
       <li>Batch traceability for full supplier-to-plate audit trail</li>
-      <li>VAT correctly applied (20% hot / 0% cold & takeaway)</li>
+      <li>UK food tax rules correctly applied per recipe</li>
       <li>Supplier records linked to every ingredient</li>
       <li>Expiry date tracking with automated email alerts</li>
       <li>EHO-ready reports generated instantly at any time</li>
@@ -1636,7 +1643,7 @@
     <div class="pricing-card">
       <p class="pricing-plan">Monthly</p>
       <div class="pricing-price">£59<span>/mo</span></div>
-      <p class="pricing-vat">VAT included</p>
+      <p class="pricing-vat">No hidden fees</p>
       <hr class="pricing-divider" />
       <ul class="pricing-features">
         <li>Unlimited ingredients</li>
@@ -1648,14 +1655,14 @@
         <li>Email alerts</li>
         <li>Team management (unlimited users)</li>
       </ul>
-      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-ghost">Start free trial</a>
+      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-ghost" rel="noopener noreferrer" target="_blank">Start free trial</a>
     </div>
     <!-- Annual -->
     <div class="pricing-card featured">
       <div class="pricing-badge">SAVE 25%</div>
       <p class="pricing-plan">Annual</p>
       <div class="pricing-price">£531<span>/yr</span></div>
-      <p class="pricing-vat">VAT included</p>
+      <p class="pricing-vat">No hidden fees</p>
       <p class="pricing-equiv">Equivalent to £44.25/mo</p>
       <hr class="pricing-divider" />
       <ul class="pricing-features">
@@ -1668,10 +1675,10 @@
         <li>Email alerts</li>
         <li>Team management (unlimited users)</li>
       </ul>
-      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-primary">Start free trial →</a>
+      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-primary" rel="noopener noreferrer" target="_blank">Start free trial →</a>
     </div>
   </div>
-  <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-dim);">14-day free trial on all plans · No credit card required · Cancel anytime · No contracts</p>
+  <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-dim);">14-day free trial · No credit card required · Cancel anytime · No contracts</p>
 </section>
 
 <!-- ── FAQ ── -->
@@ -1713,8 +1720,8 @@
     </div>
 
     <div class="faq-item">
-      <button class="faq-question">How is VAT handled? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>GastroCore automatically applies the correct UK VAT rate per recipe — 20% for hot food and 0% for cold food and takeaways. This is reflected in your recipe costing and margin reports.</p></div>
+      <button class="faq-question">How is food pricing calculated? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>GastroCore applies the correct UK food pricing rules per recipe — hot food and cold food are handled separately. This is reflected in your recipe costing and margin reports.</p></div>
     </div>
 
     <div class="faq-item">
@@ -1741,7 +1748,7 @@
   <div class="reveal">
     <h2>Ready to take control<br />of your kitchen?</h2>
     <p>Join UK restaurants that have already switched from guesswork to GastroCore.</p>
-    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary" style="font-size:1.05rem; padding:0.95rem 2.4rem;">Start your free 14-day trial →</a>
+    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary" style="font-size:1.05rem; padding:0.95rem 2.4rem;" rel="noopener noreferrer" target="_blank">Start your free 14-day trial →</a>
     <div class="cta-trust">
       <div class="cta-trust-item">✓ No credit card needed</div>
       <div class="cta-trust-item">✓ Setup in under 5 minutes</div>
@@ -1759,8 +1766,8 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://app.gastrocore.co.uk/login">Sign in</a></li>
-    <li><a href="mailto:hello@gastrocore.co.uk">Contact</a></li>
+    <li><a href="https://app.gastrocore.co.uk/login" rel="noopener noreferrer" target="_blank">Sign in</a></li>
+    <li><a href="#" onclick="this.href='mailto:'+'hello'+'@'+'gastrocore.co.uk';return true;">Contact</a></li>
   </ul>
   <p class="footer-copy">© 2026 GastroCore · gastrocore.co.uk · All rights reserved</p>
 </footer>
@@ -1771,6 +1778,16 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Set live dashboard date
+  (function() {
+    var el = document.getElementById('ds-date');
+    if (el) {
+      var d = new Date();
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      el.textContent = 'Dashboard — ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+  })();
 
   // ── LIVE DASHBOARD ANIMATION ──
   (function() {
@@ -1785,12 +1802,12 @@
     var alertPool = [
       {cls:'red',   icon:'⚠',  title:'Low stock: Chicken Breast', sub:'2 kg left · min 5 kg'},
       {cls:'red',   icon:'⚠',  title:'Low stock: Olive Oil',      sub:'0.5 L left · min 2 L'},
-      {cls:'yellow',icon:'🔔', title:'Milk expires tomorrow',      sub:'6 L · 16 May 2026'},
-      {cls:'yellow',icon:'🔔', title:'Cream expires in 2 days',    sub:'2 L · 17 May 2026'},
+      {cls:'yellow',icon:'🔔', title:'Milk expires tomorrow',      sub:'6 L · expires tomorrow'},
+      {cls:'yellow',icon:'🔔', title:'Cream expires in 2 days',    sub:'2 L · expires in 2 days'},
       {cls:'blue',  icon:'📋', title:'Purchase order suggested',   sub:'3 items below reorder level'},
       {cls:'green-a',icon:'✅',title:'Stock received: Beef Mince', sub:'10 kg · Prime Meats'},
       {cls:'blue',  icon:'📋', title:'Recipe cost updated',        sub:'Salmon Fillet · margin 64%'},
-      {cls:'yellow',icon:'🔔', title:'Lamb Shank expires in 3 days',sub:'4 kg · 19 May 2026'},
+      {cls:'yellow',icon:'🔔', title:'Lamb Shank expires in 3 days',sub:'4 kg · expires in 3 days'},
     ];
     var alertOffset = 0;
 
@@ -1884,10 +1901,22 @@
 
       setTimeout(function() {
         el.className = 'ds-alert ' + next.cls;
-        el.innerHTML =
-          '<div class="ds-aico ' + next.cls + '">' + next.icon + '</div>' +
-          '<div><div class="ds-atitle">' + next.title + '</div>' +
-          '<div class="ds-asub">' + next.sub + '</div></div>';
+        // Safe DOM construction — no innerHTML with user data
+        while (el.firstChild) el.removeChild(el.firstChild);
+        var ico = document.createElement('div');
+        ico.className = 'ds-aico ' + next.cls;
+        ico.textContent = next.icon;
+        var txt = document.createElement('div');
+        var ttl = document.createElement('div');
+        ttl.className = 'ds-atitle';
+        ttl.textContent = next.title;
+        var sub = document.createElement('div');
+        sub.className = 'ds-asub';
+        sub.textContent = next.sub;
+        txt.appendChild(ttl);
+        txt.appendChild(sub);
+        el.appendChild(ico);
+        el.appendChild(txt);
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
       }, 650);
