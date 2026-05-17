@@ -1,1920 +1,371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GastroCore — Stock Control for UK Restaurants</title>
-  <meta name="description" content="GastroCore is the smart stock control and kitchen management platform built for UK restaurants. Natasha's Law compliant. Start free for 14 days." />
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon_32x32.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="favicon_192x192.png" />
-  <meta name="keywords" content="restaurant stock control UK, inventory management restaurant, recipe costing software, food waste tracking, Natasha Law compliance, allergen management UK, kitchen management software" />
-  <meta name="robots" content="index, follow" />
-  <meta name="google-site-verification" content="pganSslVvG_DLcr8m1ToG8oBZStTTwiK0Zl5EPuLyEM" />
-  <link rel="canonical" href="https://gastrocore.co.uk" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gastrocore.co.uk" />
-  <meta property="og:title" content="GastroCore - Stock Control for UK Restaurants" />
-  <meta property="og:description" content="Real-time stock control, recipe costing, food waste tracking and Natasha Law compliance. From £59 per month. 14-day free trial." />
-  <meta property="og:image" content="https://gastrocore.co.uk/favicon_512x512.png" />
-  <meta property="og:locale" content="en_GB" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GastroCore - Stock Control for UK Restaurants" />
-  <meta name="twitter:description" content="Real-time stock control and allergen compliance for UK restaurants. From £59 per month." />
-  <meta name="twitter:image" content="https://gastrocore.co.uk/favicon_512x512.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy: #080e1c;
-      --navy2: #0d1629;
-      --navy3: #111e35;
-      --primary: #3b82f6;
-      --primary-light: #60a5fa;
-      --primary-glow: rgba(59,130,246,0.15);
-      --accent: #06b6d4;
-      --green: #22c55e;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-dim: #475569;
-      --border: rgba(255,255,255,0.07);
-      --border-light: rgba(255,255,255,0.12);
-      --card: rgba(255,255,255,0.03);
-      --card-hover: rgba(255,255,255,0.06);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--navy);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 0 2rem;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(8,14,28,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
-    .nav-logo span { color: var(--primary); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--primary);
-      color: white !important;
-      padding: 0.45rem 1.1rem;
-      border-radius: 6px;
-      font-weight: 500 !important;
-      font-size: 0.875rem !important;
-      transition: background 0.2s, transform 0.1s !important;
-    }
-    .nav-cta:hover { background: #2563eb !important; transform: translateY(-1px); }
-
-    @media (max-width: 640px) { .nav-links { display: none; } }
-
-    section { position: relative; z-index: 1; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 1.5rem 6rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.13) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(59,130,246,0.1);
-      border: 1px solid rgba(59,130,246,0.25);
-      color: var(--primary-light);
-      font-size: 0.78rem;
-      font-weight: 500;
-      padding: 0.3rem 0.85rem;
-      border-radius: 100px;
-      margin-bottom: 2rem;
-      letter-spacing: 0.02em;
-      animation: fadeUp 0.6s ease both;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.6rem, 7vw, 5.2rem);
-      font-weight: 700;
-      line-height: 1.06;
-      letter-spacing: -0.03em;
-      max-width: 860px;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--primary-light);
-    }
-
-    .hero-subheadline {
-      font-size: clamp(1rem, 2.5vw, 1.15rem);
-      color: var(--text-muted);
-      max-width: 580px;
-      margin-bottom: 0.75rem;
-      font-weight: 300;
-      animation: fadeUp 0.6s 0.2s ease both;
-      line-height: 1.65;
-    }
-
-    .hero-target {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      margin-bottom: 2.5rem;
-      animation: fadeUp 0.6s 0.25s ease both;
-    }
-
-    .hero-target strong {
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.2s;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.35); }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 400;
-      text-decoration: none;
-      border: 1px solid var(--border-light);
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); background: var(--card); }
-
-    .hero-note {
-      margin-top: 1.2rem;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      animation: fadeUp 0.6s 0.4s ease both;
-    }
-
-    /* ── STATS BAR ── */
-    .stats-bar {
-      padding: 3.5rem 1.5rem;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.015);
-    }
-
-    .stats-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 2rem;
-      text-align: center;
-    }
-
-    .stat-item {}
-
-    .stat-number {
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 0.35rem;
-    }
-
-    .stat-number span { color: var(--primary-light); }
-
-    .stat-label {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      font-weight: 400;
-      line-height: 1.4;
-    }
-
-    /* ── SOCIAL PROOF / TESTIMONIALS ── */
-    .testimonials {
-      padding: 7rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3.5rem;
-    }
-
-    .testimonial-card {
-      background: var(--card);
-      border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 2rem;
-      position: relative;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .testimonial-card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.25); }
-
-    .testimonial-quote {
-      font-size: 2rem;
-      color: var(--primary);
-      line-height: 1;
-      margin-bottom: 1rem;
-      opacity: 0.6;
-    }
-
-    .testimonial-text {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .testimonial-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary-glow), rgba(6,182,212,0.15));
-      border: 1px solid rgba(59,130,246,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .testimonial-name {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .testimonial-role {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-top: 0.1rem;
-    }
-
-    .testimonial-stars {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      font-size: 0.75rem;
-      color: #facc15;
-      letter-spacing: 1px;
-    }
-
-    /* ── PROBLEMS & SOLUTIONS ── */
-    .problems {
-      padding: 7rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .problems-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3.5rem;
-    }
-
-    .problem-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .problem-card:hover { transform: translateY(-3px); border-color: var(--border-light); }
-
-    .problem-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.65rem;
-      border-radius: 100px;
-      margin-bottom: 1.2rem;
-    }
-
-    .problem-label.problem { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
-    .problem-label.solution { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
-
-    .problem-icon {
-      font-size: 1.6rem;
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-
-    .problem-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-
-    .problem-card p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    .problem-arrow {
-      text-align: center;
-      padding: 1rem 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .problem-arrow-line {
-      width: 2px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(239,68,68,0.4), rgba(34,197,94,0.4));
-      border-radius: 2px;
-    }
-
-    .problem-pair {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    /* ── LOGOS BAR ── */
-    .logos-bar {
-      padding: 3rem 1.5rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logos-bar p {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .logos-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .logo-item {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-      opacity: 0.6;
-    }
-
-    /* ── FEATURES ── */
-    .features {
-      padding: 7rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      max-width: 620px;
-      margin-bottom: 1rem;
-    }
-
-    .section-subtitle {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 520px;
-      font-weight: 300;
-      margin-bottom: 4rem;
-      line-height: 1.65;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .feature-card {
-      background: var(--navy);
-      padding: 2rem;
-      transition: background 0.2s;
-    }
-    .feature-card:hover { background: var(--navy3); }
-
-    .feature-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--primary-glow);
-      border: 1px solid rgba(59,130,246,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-
-    .feature-card p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    /* ── HOW IT WORKS ── */
-    .how-it-works {
-      padding: 7rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 3.5rem;
-      position: relative;
-    }
-
-    .steps::before {
-      content: '';
-      position: absolute;
-      left: 24px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--primary), transparent);
-      opacity: 0.3;
-    }
-
-    .step {
-      display: flex;
-      gap: 2rem;
-      padding: 2rem 0;
-      position: relative;
-    }
-    .step:not(:last-child) { border-bottom: 1px solid var(--border); }
-
-    .step-number {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--primary-glow);
-      border: 1px solid rgba(59,130,246,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--primary-light);
-      flex-shrink: 0;
-      font-family: 'DM Mono', monospace;
-    }
-
-    .step-content h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
-    }
-
-    .step-content p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    .step-time {
-      margin-top: 0.5rem;
-      font-size: 0.78rem;
-      color: var(--primary);
-      font-family: 'DM Mono', monospace;
-    }
-
-    /* ── COMPLIANCE ── */
-    .compliance {
-      padding: 5rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .compliance-inner {
-      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.05) 100%);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 20px;
-      padding: 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .compliance-inner { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
-    }
-
-    .compliance h2 {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .compliance p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      font-weight: 300;
-      line-height: 1.75;
-    }
-
-    .compliance-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(34,197,94,0.1);
-      border: 1px solid rgba(34,197,94,0.25);
-      color: #4ade80;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.25rem 0.75rem;
-      border-radius: 100px;
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .compliance-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .compliance-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .compliance-list li::before {
-      content: '✓';
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-top: 0.05rem;
-      flex-shrink: 0;
-    }
-
-    /* ── TRUST BADGES ── */
-    .trust-badges {
-      padding: 3rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .badges-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--card);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      padding: 0.6rem 1.1rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      white-space: nowrap;
-    }
-
-    .badge-icon { font-size: 1rem; }
-
-    /* ── SUITE ── */
-    .suite { padding: 7rem 1.5rem; max-width: 1100px; margin: 0 auto; }
-    .suite-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3.5rem; }
-    @media (max-width: 768px) { .suite-grid { grid-template-columns: 1fr; } }
-    .suite-card { background: var(--card); border: 1px solid var(--border-light); border-radius: 20px; padding: 2.5rem; transition: border-color 0.2s, transform 0.2s; }
-    .suite-card:hover { transform: translateY(-4px); }
-    .suite-card.nexus { border-color: rgba(6,182,212,0.3); background: linear-gradient(135deg, rgba(6,182,212,0.06) 0%, var(--card) 100%); }
-    .suite-card.nexus-stock { border-color: rgba(59,130,246,0.3); background: linear-gradient(135deg, rgba(59,130,246,0.06) 0%, var(--card) 100%); }
-    .suite-tag { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 100px; margin-right: 0.4rem; }
-    .suite-tag.nexus-t { background: rgba(6,182,212,0.12); color: #06b6d4; border: 1px solid rgba(6,182,212,0.25); }
-    .suite-tag.nexus-stock-t { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
-    .suite-tag.soon { background: rgba(234,179,8,0.12); color: #eab308; border: 1px solid rgba(234,179,8,0.25); }
-    .suite-tag.live { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
-    .suite-card h3 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .suite-card .tagline { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.2rem; }
-    .suite-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
-    .suite-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
-    .suite-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); }
-    .suite-features li::before { content: "✓"; color: var(--primary); font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
-    .suite-price { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .suite-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
-    .suite-bundle { margin-top: 1.5rem; background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.06) 100%); border: 1px solid rgba(59,130,246,0.2); border-radius: 16px; padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-    .bundle-left h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .bundle-left p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
-    .bundle-price { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
-    .bundle-price span { font-size: 0.85rem; font-weight: 400; color: var(--text-muted); }
-    .bundle-save { font-size: 0.78rem; color: #22c55e; margin-top: 0.2rem; }
-
-    /* ── COMPARISON ── */
-    .comparison { padding: 5rem 1.5rem; max-width: 1000px; margin: 0 auto; }
-    .comparison-table { width: 100%; border-collapse: collapse; margin-top: 3rem; font-size: 0.875rem; }
-    .comparison-table th { padding: 1rem 1.2rem; text-align: left; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); border-bottom: 1px solid var(--border); }
-    .comparison-table th.hl { color: var(--primary-light); }
-    .comparison-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 300; }
-    .comparison-table td:first-child { font-weight: 500; color: var(--text); }
-    .comparison-table td.hl { color: var(--primary-light); font-weight: 500; }
-    .comparison-table tr:hover td { background: var(--card); }
-    .chk { color: #22c55e; } .crs { color: var(--text-dim); }
-
-    /* ── PRICING ── */
-    .pricing {
-      padding: 7rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3.5rem;
-      text-align: left;
-    }
-
-    @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
-
-    .pricing-card {
-      background: var(--card);
-      border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 2.5rem;
-      position: relative;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .pricing-card:hover { transform: translateY(-4px); }
-
-    .pricing-card.featured {
-      border-color: rgba(59,130,246,0.4);
-      background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, var(--card) 100%);
-    }
-
-    .pricing-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--primary);
-      color: white;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.25rem 0.9rem;
-      border-radius: 100px;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-
-    .pricing-plan { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
-    .pricing-price { font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.3rem; }
-    .pricing-price span { font-size: 1.1rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0; }
-    .pricing-vat { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.5rem; }
-    .pricing-equiv { font-size: 0.82rem; color: var(--primary-light); margin-bottom: 1.5rem; }
-    .pricing-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.5rem; }
-    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
-    .pricing-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-muted); }
-    .pricing-features li::before { content: '✓'; color: var(--primary); font-weight: 700; font-size: 0.8rem; flex-shrink: 0; }
-
-    .pricing-cta {
-      width: 100%;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-align: center;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      transition: all 0.2s;
-    }
-
-    .pricing-cta-primary { background: var(--primary); color: white; border: none; }
-    .pricing-cta-primary:hover { background: #2563eb; transform: translateY(-1px); }
-    .pricing-cta-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border-light); }
-    .pricing-cta-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
-
-    /* ── FAQ ── */
-    .faq {
-      padding: 7rem 1.5rem;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .faq-list { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 0; }
-    .faq-item { border-top: 1px solid var(--border); }
-    .faq-item:last-child { border-bottom: 1px solid var(--border); }
-
-    .faq-question {
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-align: left;
-      padding: 1.4rem 0;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      transition: color 0.2s;
-    }
-    .faq-question:hover { color: var(--primary-light); }
-
-    .faq-icon { font-size: 1.1rem; color: var(--text-dim); transition: transform 0.25s; flex-shrink: 0; }
-
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; }
-    .faq-answer p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; padding-bottom: 1.4rem; font-weight: 300; }
-
-    .faq-item.open .faq-answer { max-height: 300px; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--primary); }
-
-    /* ── CTA ── */
-    .cta-section {
-      padding: 8rem 1.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-glow {
-      position: absolute;
-      bottom: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .cta-section h2 {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-section p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    .cta-trust {
-      margin-top: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .cta-trust-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .footer-logo { font-size: 0.95rem; font-weight: 700; }
-    .footer-logo span { color: var(--primary); }
-
-    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text-muted); }
-
-    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    .mono {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      background: rgba(6,182,212,0.08);
-      border: 1px solid rgba(6,182,212,0.15);
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    /* ── SECTION DIVIDER ── */
-    .section-divider {
-      max-width: 1100px;
-      margin: 0 auto;
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── LAPTOP MOCKUP ── */
-    .mockup-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 1.5rem 5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: visible;
-    }
-    .mockup-caption {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    .mockup-caption strong { color: var(--text-muted); font-weight: 500; }
-    .laptop-outer {
-      width: 100%;
-      max-width: 860px;
-      filter: drop-shadow(0 50px 100px rgba(59,130,246,0.14)) drop-shadow(0 20px 40px rgba(0,0,0,0.7));
-    }
-    .lp-lid {
-      background: linear-gradient(160deg,#2e2e2e 0%,#1c1c1c 50%,#111 100%);
-      border-radius: 14px 14px 4px 4px;
-      padding: 14px 14px 10px;
-      border: 1px solid #3a3a3a;
-      box-shadow: 0 2px 0 #555 inset;
-    }
-    .lp-bezel { background: #080808; border-radius: 7px; padding: 9px 9px 7px; }
-    .lp-cam { width: 6px; height: 6px; background: #181818; border-radius: 50%; margin: 0 auto 6px; border: 1px solid #2a2a2a; }
-    .lp-screen { background: #080e1c; border-radius: 5px; overflow: hidden; aspect-ratio: 16/9; position: relative; display: flex; flex-direction: column; }
-    .lp-shine { position: absolute; top: 0; left: 0; right: 0; height: 40%; background: linear-gradient(180deg,rgba(255,255,255,0.018),transparent); pointer-events: none; border-radius: 5px 5px 0 0; z-index: 2; }
-    .lp-hinge { height: 3px; background: linear-gradient(90deg,#0d0d0d,#3a3a3a,#0d0d0d); }
-    .lp-base { background: linear-gradient(180deg,#2e2e2e,#1a1a1a); height: 18px; border-radius: 0 0 12px 12px; position: relative; }
-    .lp-base::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20%; height: 5px; background: #111; border-radius: 5px 5px 0 0; }
-    @media (max-width: 640px) { .mockup-section { display: none; } }
-    /* DASHBOARD */
-    .ds { display: flex; flex: 1; font-family: -apple-system,BlinkMacSystemFont,sans-serif; min-height: 0; }
-    .ds-sb { width: 52px; background: #05090f; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; padding: 7px 0; gap: 3px; flex-shrink: 0; }
-    .ds-brand { font-size: 7px; font-weight: 800; color: #3b82f6; letter-spacing: -0.5px; margin-bottom: 5px; }
-    .ds-si { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-    .ds-si.on { background: rgba(59,130,246,0.18); }
-    .ds-si svg { width: 13px; height: 13px; stroke: rgba(148,163,184,0.45); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .ds-si.on svg { stroke: #60a5fa; }
-    .ds-dot { width: 5px; height: 5px; border-radius: 50%; background: #ef4444; margin-top: auto; margin-bottom: 2px; }
-    .ds-main { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-    .ds-top { display: flex; align-items: center; justify-content: space-between; padding: 5px 9px; border-bottom: 1px solid rgba(255,255,255,0.05); background: #060c18; }
-    .ds-top-title { font-size: 7.5px; font-weight: 700; color: #f1f5f9; letter-spacing: -0.2px; }
-    .ds-top-right { display: flex; align-items: center; gap: 4px; }
-    .ds-trial { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); color: #60a5fa; font-size: 5px; padding: 1.5px 5px; border-radius: 20px; font-weight: 600; }
-    .ds-ava { width: 15px; height: 15px; border-radius: 50%; background: linear-gradient(135deg,#3b82f6,#06b6d4); font-size: 5px; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-    .ds-body { flex: 1; padding: 5px 7px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; min-height: 0; }
-    .ds-kpis { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
-    .ds-kpi { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 5px; padding: 4px 6px; }
-    .ds-kpi.danger { border-color: rgba(239,68,68,0.2); }
-    .ds-kpi.good { border-color: rgba(34,197,94,0.15); }
-    .ds-klabel { font-size: 4px; color: #475569; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
-    .ds-kval { font-size: 11px; font-weight: 800; letter-spacing: -1px; line-height: 1; color: #f1f5f9; }
-    .ds-kval.red { color: #f87171; }
-    .ds-kbadge { display: inline-flex; font-size: 3.8px; font-weight: 700; padding: 1px 3px; border-radius: 20px; margin-top: 2px; }
-    .ds-kbadge.up { background: rgba(34,197,94,0.12); color: #4ade80; }
-    .ds-kbadge.dn { background: rgba(239,68,68,0.12); color: #f87171; }
-    .ds-mid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3px; flex: 1; min-height: 0; }
-    .ds-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 5px; padding: 4px 6px; overflow: hidden; }
-    .ds-card-hd { font-size: 4.5px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
-    .ds-chart { display: flex; align-items: flex-end; gap: 3px; height: 42px; }
-    .ds-bw { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 2px; height: 100%; justify-content: flex-end; }
-    .ds-bar { width: 100%; border-radius: 2px 2px 0 0; }
-    .ds-blbl { font-size: 3.5px; color: #334155; }
-    .ds-tgt { height: 1px; background: rgba(59,130,246,0.3); margin-bottom: 3px; position: relative; }
-    .ds-tgt::after { content: 'Target 30%'; position: absolute; right: 0; top: -5px; font-size: 3px; color: #3b82f6; }
-    .ds-alerts { display: flex; flex-direction: column; gap: 2.5px; }
-    .ds-alert { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 3.5px 4px; display: flex; align-items: flex-start; gap: 3px; }
-    .ds-alert.red { border-color: rgba(239,68,68,0.25); background: rgba(239,68,68,0.04); }
-    .ds-alert.yellow { border-color: rgba(234,179,8,0.25); background: rgba(234,179,8,0.04); }
-    .ds-alert.blue { border-color: rgba(59,130,246,0.2); background: rgba(59,130,246,0.04); }
-    .ds-aico { width: 11px; height: 11px; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 5.5px; }
-    .ds-aico.red { background: rgba(239,68,68,0.15); }
-    .ds-aico.yellow { background: rgba(234,179,8,0.15); }
-    .ds-aico.blue { background: rgba(59,130,246,0.15); }
-    .ds-atitle { font-size: 4.5px; font-weight: 600; color: #f1f5f9; line-height: 1.3; }
-    .ds-asub { font-size: 3.8px; color: #64748b; margin-top: 0.5px; }
-    .ds-tbl { overflow: hidden; }
-    .ds-tbl table { width: 100%; border-collapse: collapse; }
-    .ds-tbl th { font-size: 3.8px; color: #334155; text-transform: uppercase; letter-spacing: 0.4px; text-align: left; padding: 2px 3px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .ds-tbl td { font-size: 4.5px; color: #94a3b8; padding: 2.5px 3px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .ds-tbl td:first-child { color: #e2e8f0; font-weight: 600; }
-    .ds-pill { display: inline-block; padding: 1px 4px; border-radius: 20px; font-size: 3.5px; font-weight: 700; }
-    .ds-pill.g { background: rgba(34,197,94,0.12); color: #4ade80; }
-    .ds-pill.y { background: rgba(234,179,8,0.12); color: #facc15; }
-    .ds-pill.r { background: rgba(239,68,68,0.12); color: #f87171; }
-  </style>
-
-  <!-- Google Analytics GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VCD558M675"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-VCD558M675');
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eu Mereço Doce — Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rosa: #D4829A;
+    --rosa-claro: #F2C4D0;
+    --rosa-escuro: #A85570;
+    --dourado: #C9A75A;
+    --dourado-cl: #E8CC8A;
+    --verde: #4CAF7A;
+    --marrom: #5C2E1A;
+    --marrom-md: #8B4A2E;
+    --creme: #FBF6F0;
+    --bege: #EDE0D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #0A0503;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(212,130,154,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(201,167,90,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* LOGO */
+  .logo-wrap {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeUp .6s ease both;
+  }
+  .logo-icon {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--marrom), var(--marrom-md));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 8px 32px rgba(92,46,26,.4);
+  }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #444;
+    margin-top: .4rem;
+  }
+
+  /* TAGLINE */
+  .tagline {
+    text-align: center;
+    color: #555;
+    font-size: .85rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+
+  /* CARDS GRID */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 880px;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .card {
+    background: #140806;
+    border: 1px solid #2E1409;
+    border-radius: 22px;
+    padding: 2rem 1.8rem;
+    text-decoration: none;
+    color: var(--creme);
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    transition: transform .22s, box-shadow .22s, border-color .22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .22s;
+  }
+  .card:hover { transform: translateY(-5px); }
+  .card:active { transform: scale(.98); }
+
+  /* Color accents per card */
+  .card.cliente  { border-color: rgba(212,130,154,.3); }
+  .card.cliente:hover  { box-shadow: 0 16px 48px rgba(212,130,154,.18); border-color: var(--rosa); }
+  .card.cliente::before  { background: radial-gradient(ellipse at top left, rgba(212,130,154,.08), transparent 60%); }
+  .card.cliente:hover::before { opacity: 1; }
+
+  .card.admin  { border-color: rgba(201,167,90,.3); }
+  .card.admin:hover  { box-shadow: 0 16px 48px rgba(201,167,90,.18); border-color: var(--dourado); }
+  .card.admin::before  { background: radial-gradient(ellipse at top left, rgba(201,167,90,.08), transparent 60%); }
+  .card.admin:hover::before { opacity: 1; }
+
+  .card.cozinha  { border-color: rgba(76,175,122,.3); }
+  .card.cozinha:hover  { box-shadow: 0 16px 48px rgba(76,175,122,.18); border-color: var(--verde); }
+  .card.cozinha::before  { background: radial-gradient(ellipse at top left, rgba(76,175,122,.08), transparent 60%); }
+  .card.cozinha:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .icon-cliente  { background: rgba(212,130,154,.15); }
+  .icon-admin    { background: rgba(201,167,90,.15); }
+  .icon-cozinha  { background: rgba(76,175,122,.15); }
+
+  .card-label {
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: .1rem;
+  }
+  .label-cliente  { color: var(--rosa); }
+  .label-admin    { color: var(--dourado); }
+  .label-cozinha  { color: var(--verde); }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--creme);
+    line-height: 1.1;
+  }
+
+  .card-desc {
+    font-size: .8rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .card-features {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    margin-top: .2rem;
+  }
+  .feat {
+    font-size: .75rem;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .feat::before { content: '›'; color: #333; font-size: 1rem; }
+
+  .card-arrow {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #1A0B06;
+  }
+  .arrow-label {
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  .label-cl { color: var(--rosa); }
+  .label-ad { color: var(--dourado); }
+  .label-co { color: var(--verde); }
+
+  .arrow-icon {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+    transition: transform .2s;
+  }
+  .card:hover .arrow-icon { transform: translateX(4px); }
+  .ai-cl { background: rgba(212,130,154,.15); color: var(--rosa); }
+  .ai-ad { background: rgba(201,167,90,.15); color: var(--dourado); }
+  .ai-co { background: rgba(76,175,122,.15); color: var(--verde); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: .72rem;
+    color: #2E1409;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .footer span { color: #3D1F14; }
+
+  /* DIVIDER */
+  .divider {
+    width: 40px; height: 1px;
+    background: #2E1409;
+    margin: .5rem auto;
+  }
+
+  /* INSTRUCTION NOTE */
+  .note {
+    background: #140806;
+    border: 1px solid #2E1409;
+    border-radius: 14px;
+    padding: 1rem 1.3rem;
+    max-width: 880px;
+    width: 100%;
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: .8rem;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+  .note-text { font-size: .75rem; color: #555; line-height: 1.65; }
+  .note-text strong { color: #888; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    .logo-name { font-size: 1.8rem; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">GASTRO<span>CORE</span></div>
-  <ul class="nav-links">
-    <li><a href="#suite">Suite</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://app.gastrocore.co.uk/login" class="nav-cta">Sign in</a></li>
-  </ul>
-</nav>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-badge">🇬🇧 Built for UK Restaurants · Natasha's Law Compliant · Zero Commission</div>
-
-  <h1>Stop losing money<br />to <em>poor stock control.</em></h1>
-
-  <p class="hero-subheadline">
-    Know your exact food costs. Track stock in real time. Stay EHO-compliant.<br />
-    GastroCore gives UK restaurants total control of the kitchen — from ingredients to margins.
-  </p>
-
-  <p class="hero-target">
-    Built for <strong>independent restaurants, cafés, pubs and takeaways</strong> across the UK.
-  </p>
-
-  <div class="hero-ctas">
-    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary">Start free 14-day trial →</a>
-    <a href="#how-it-works" class="btn-ghost">See how it works</a>
+  <div class="logo-wrap">
+    <div class="logo-icon">🍰</div>
+    <div class="logo-name">Eu Mereço Doce</div>
+    <div class="logo-sub">Sistema de Pedidos</div>
   </div>
-  <p class="hero-note">No credit card required &nbsp;·&nbsp; Setup in under 5 minutes &nbsp;·&nbsp; Cancel anytime</p>
-</section>
 
-<!-- ── LAPTOP MOCKUP ── -->
-<section class="mockup-section">
-  <p class="mockup-caption">See your kitchen in real time — <strong>know exactly where your money is going.</strong></p>
-  <div class="laptop-outer">
-    <div class="lp-lid">
-      <div class="lp-bezel">
-        <div class="lp-cam"></div>
-        <div class="lp-screen">
-          <div class="lp-shine"></div>
-          <div class="ds">
-            <!-- Sidebar -->
-            <div class="ds-sb">
-              <div class="ds-brand">GC</div>
-              <div class="ds-si on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-              <div class="ds-si"><svg viewBox="0 0 24 24"><path d="M20 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/><path d="M16 3H8l-2 4h12l-2-4z"/></svg></div>
-              <div class="ds-si"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div>
-              <div class="ds-si"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-              <div class="ds-si"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
-              <div class="ds-dot" id="ds-dot"></div>
-            </div>
-            <!-- Main -->
-            <div class="ds-main">
-              <div class="ds-top">
-                <div class="ds-top-title">Dashboard — May 2026</div>
-                <div class="ds-top-right">
-                  <div class="ds-trial">⏱ 11 days left in trial</div>
-                  <div class="ds-ava">EL</div>
-                </div>
-              </div>
-              <div class="ds-body">
-                <!-- KPIs -->
-                <div class="ds-kpis">
-                  <div class="ds-kpi good" id="kpi-fc">
-                    <div class="ds-klabel">Food Cost</div>
-                    <div class="ds-kval" id="kpi-fc-val">32%</div>
-                    <div class="ds-kbadge up" id="kpi-fc-badge">↓ −2.1% vs last month</div>
-                  </div>
-                  <div class="ds-kpi danger" id="kpi-waste">
-                    <div class="ds-klabel">Waste This Week</div>
-                    <div class="ds-kval" id="kpi-waste-val">£120</div>
-                    <div class="ds-kbadge dn" id="kpi-waste-badge">↑ +£22 vs last week</div>
-                  </div>
-                  <div class="ds-kpi" id="kpi-stock">
-                    <div class="ds-klabel">Stock Value</div>
-                    <div class="ds-kval" id="kpi-stock-val">£4,320</div>
-                    <div class="ds-kbadge up" id="kpi-stock-badge">↑ +8% this week</div>
-                  </div>
-                  <div class="ds-kpi danger" id="kpi-low">
-                    <div class="ds-klabel">Low Stock Items</div>
-                    <div class="ds-kval red" id="kpi-low-val">3</div>
-                    <div class="ds-kbadge dn" id="kpi-low-badge">Action needed</div>
-                  </div>
-                </div>
-                <!-- Mid: chart + alerts -->
-                <div class="ds-mid">
-                  <div class="ds-card">
-                    <div class="ds-card-hd">Food cost over time — last 7 days</div>
-                    <div class="ds-tgt"></div>
-                    <div class="ds-chart" id="ds-chart">
-                      <div class="ds-bw"><div class="ds-bar" id="bar-0" style="height:55%;background:rgba(59,130,246,0.4);transition:height 1.4s ease;"></div><div class="ds-blbl">Mon</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-1" style="height:72%;background:rgba(59,130,246,0.4);transition:height 1.4s ease;"></div><div class="ds-blbl">Tue</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-2" style="height:48%;background:rgba(59,130,246,0.4);transition:height 1.4s ease;"></div><div class="ds-blbl">Wed</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-3" style="height:85%;background:rgba(59,130,246,0.55);transition:height 1.4s ease;"></div><div class="ds-blbl">Thu</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-4" style="height:63%;background:rgba(59,130,246,0.4);transition:height 1.4s ease;"></div><div class="ds-blbl">Fri</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-5" style="height:100%;background:#3b82f6;transition:height 1.4s ease;"></div><div class="ds-blbl">Sat</div></div>
-                      <div class="ds-bw"><div class="ds-bar" id="bar-6" style="height:52%;background:rgba(59,130,246,0.4);transition:height 1.4s ease;"></div><div class="ds-blbl">Sun</div></div>
-                    </div>
-                  </div>
-                  <div class="ds-card">
-                    <div class="ds-card-hd">Alerts</div>
-                    <div class="ds-alerts" id="ds-alerts">
-                      <div class="ds-alert red"><div class="ds-aico red">⚠</div><div><div class="ds-atitle">Low stock: Chicken Breast</div><div class="ds-asub">2 kg left · min 5 kg</div></div></div>
-                      <div class="ds-alert red"><div class="ds-aico red">⚠</div><div><div class="ds-atitle">Low stock: Olive Oil</div><div class="ds-asub">0.5 L left · min 2 L</div></div></div>
-                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Milk expires tomorrow</div><div class="ds-asub">6 L · 16 May 2026</div></div></div>
-                      <div class="ds-alert yellow"><div class="ds-aico yellow">🔔</div><div><div class="ds-atitle">Cream expires in 2 days</div><div class="ds-asub">2 L · 17 May 2026</div></div></div>
-                      <div class="ds-alert blue"><div class="ds-aico blue">📋</div><div><div class="ds-atitle">Purchase order suggested</div><div class="ds-asub">3 items below reorder level</div></div></div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Table -->
-                <div class="ds-card ds-tbl">
-                  <div class="ds-card-hd">Ingredients — stock status</div>
-                  <table>
-                    <thead><tr><th>Ingredient</th><th>Stock</th><th>Unit Cost</th><th>Supplier</th><th>Status</th></tr></thead>
-                    <tbody id="ds-tbody">
-                      <tr><td>Chicken Breast</td><td id="td-s0">2 kg</td><td>£6.80/kg</td><td>Fresh Direct</td><td><span class="ds-pill r" id="td-p0">Low stock</span></td></tr>
-                      <tr><td>Beef Mince</td><td id="td-s1">8 kg</td><td>£5.20/kg</td><td>Prime Meats</td><td><span class="ds-pill g" id="td-p1">OK</span></td></tr>
-                      <tr><td>Whole Milk</td><td id="td-s2">6 L</td><td>£0.90/L</td><td>Dairy Co.</td><td><span class="ds-pill y" id="td-p2">Expiring</span></td></tr>
-                      <tr><td>Olive Oil</td><td id="td-s3">0.5 L</td><td>£4.50/L</td><td>Medfoods</td><td><span class="ds-pill r" id="td-p3">Low stock</span></td></tr>
-                      <tr><td>Pasta (Penne)</td><td id="td-s4">12 kg</td><td>£1.20/kg</td><td>Wholesale UK</td><td><span class="ds-pill g" id="td-p4">OK</span></td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="lp-hinge"></div>
-    <div class="lp-base"></div>
-  </div>
-</section>
+  <div class="tagline">Escolha a tela que deseja acessar</div>
 
+  <div class="cards">
 
-<!-- ── STATS BAR ── -->
-<div class="stats-bar">
-<div class="stats-inner reveal">
-    <div class="stat-item">
-      <div class="stat-number">£1,800<span>+</span></div>
-      <div class="stat-label">Average annual savings<br />for UK restaurants</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">&lt;5<span>min</span></div>
-      <div class="stat-label">Average setup time<br />from signup to running</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">14</div>
-      <div class="stat-label">UK allergens tracked<br />per recipe automatically</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">£0</div>
-      <div class="stat-label">Commission on sales.<br />Flat monthly fee only.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── SOCIAL PROOF / TESTIMONIALS ── -->
-<section class="testimonials">
-  <div class="reveal">
-    <p class="section-label">What restaurants say</p>
-    <h2 class="section-title">Real kitchens. Real results.</h2>
-    <p class="section-subtitle">From spreadsheets to full stock control in minutes.</p>
-  </div>
-  <div class="testimonials-grid reveal">
-
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-quote">"</div>
-      <p class="testimonial-text">We went from spreadsheets to GastroCore in under 10 minutes. Now I know the exact cost of every dish and our waste is down by 30%. I wish I'd had this three years ago.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">🍽</div>
+    <!-- CLIENTE -->
+    <a class="card cliente" href="cliente.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-cliente">🛍️</div>
         <div>
-          <div class="testimonial-name">Maria S.</div>
-          <div class="testimonial-role">The Crown & Anchor · London</div>
+          <div class="card-label label-cliente">Acesso público</div>
+          <div class="card-title">Cardápio do Cliente</div>
         </div>
       </div>
-    </div>
+      <div class="card-desc">Tela que o cliente usa para navegar pelo cardápio, personalizar e fazer o pedido.</div>
+      <div class="card-features">
+        <div class="feat">Cardápio com todos os produtos</div>
+        <div class="feat">Customização de sabor, tamanho e recheio</div>
+        <div class="feat">Upload de foto para decoração</div>
+        <div class="feat">Pagamento via Pix, Cartão ou Dinheiro</div>
+        <div class="feat">Acompanhamento do status em tempo real</div>
+      </div>
+      <div class="card-arrow">
+        <span class="arrow-label label-cl">Abrir Cardápio →</span>
+        <div class="arrow-icon ai-cl">›</div>
+      </div>
+    </a>
 
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-quote">"</div>
-      <p class="testimonial-text">The allergen tracking alone is worth it. Our EHO inspection last month went smoothly — the officer was impressed we had full traceability records ready to print on the spot.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">☕</div>
+    <!-- ADMIN -->
+    <a class="card admin" href="admin.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-admin">⚙️</div>
         <div>
-          <div class="testimonial-name">James R.</div>
-          <div class="testimonial-role">Riverside Café · Bristol</div>
+          <div class="card-label label-admin">Acesso restrito</div>
+          <div class="card-title">Painel Administrativo</div>
         </div>
       </div>
-    </div>
+      <div class="card-desc">Painel touchscreen para a equipe gerenciar pedidos e acompanhar pagamentos.</div>
+      <div class="card-features">
+        <div class="feat">Aceitar ou recusar pedidos</div>
+        <div class="feat">Alerta sonoro para pedidos novos</div>
+        <div class="feat">Envio automático para a TV da cozinha</div>
+        <div class="feat">Aba de pagamentos: Pix, Cartão, Dinheiro</div>
+        <div class="feat">Marcar pedidos como pagos</div>
+      </div>
+      <div class="card-arrow">
+        <span class="arrow-label label-ad">Abrir Admin →</span>
+        <div class="arrow-icon ai-ad">›</div>
+      </div>
+    </a>
 
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-quote">"</div>
-      <p class="testimonial-text">As a takeaway owner I was worried about Natasha's Law. GastroCore made compliance straightforward — all 14 allergens are flagged automatically when I build a recipe.</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">🥡</div>
+    <!-- COZINHA -->
+    <a class="card cozinha" href="cozinha.html">
+      <div style="display:flex;align-items:center;gap:.9rem">
+        <div class="card-icon icon-cozinha">📺</div>
         <div>
-          <div class="testimonial-name">Priya K.</div>
-          <div class="testimonial-role">Spice Route Takeaway · Birmingham</div>
+          <div class="card-label label-cozinha">TV da cozinha</div>
+          <div class="card-title">Painel da Cozinha</div>
         </div>
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── PROBLEMS & SOLUTIONS ── -->
-<section class="problems">
-  <div class="reveal">
-    <p class="section-label">Problems & Solutions</p>
-    <h2 class="section-title">Sound familiar?<br />GastroCore fixes this.</h2>
-    <p class="section-subtitle">The most common reasons UK restaurants lose money — and how we solve each one.</p>
-  </div>
-
-  <div class="problems-grid reveal">
-
-    <div class="problem-pair">
-      <div class="problem-card">
-        <span class="problem-label problem">❌ Problem</span>
-        <span class="problem-icon">📉</span>
-        <h3>You don't know your real food cost</h3>
-        <p>Recipes priced by gut feeling. No idea if a dish actually makes money after ingredient costs. Margins invisible until end-of-month — too late to act.</p>
+      <div class="card-desc">Tela para projetar na TV. Mostra os pedidos em andamento para a equipe de produção.</div>
+      <div class="card-features">
+        <div class="feat">Pedidos em preparo em destaque</div>
+        <div class="feat">Pedidos prontos aguardando retirada</div>
+        <div class="feat">Nome, sabor, tamanho e horário visíveis</div>
+        <div class="feat">Sem botões — apenas visualização</div>
+        <div class="feat">Atualiza automaticamente em tempo real</div>
       </div>
-      <div class="problem-card" style="border-top:none; border-radius: 0 0 16px 16px; background: rgba(34,197,94,0.03); border-color: rgba(34,197,94,0.15);">
-        <span class="problem-label solution">✓ GastroCore</span>
-        <p>Recipe costing calculates your food cost per dish automatically. Set target margins, see exactly where you're losing money, and adjust pricing with confidence.</p>
+      <div class="card-arrow">
+        <span class="arrow-label label-co">Abrir TV →</span>
+        <div class="arrow-icon ai-co">›</div>
       </div>
-    </div>
-
-    <div class="problem-pair">
-      <div class="problem-card">
-        <span class="problem-label problem">❌ Problem</span>
-        <span class="problem-icon">📦</span>
-        <h3>Stock runs out without warning</h3>
-        <p>You discover you're out of a key ingredient mid-service. Manual stock counts are done weekly at best. Reorders happen reactively, not proactively.</p>
-      </div>
-      <div class="problem-card" style="border-top:none; border-radius: 0 0 16px 16px; background: rgba(34,197,94,0.03); border-color: rgba(34,197,94,0.15);">
-        <span class="problem-label solution">✓ GastroCore</span>
-        <p>Real-time stock tracking deducts ingredients as you log production. Low-stock alerts fire by email before you run out — with smart reorder suggestions based on usage history.</p>
-      </div>
-    </div>
-
-    <div class="problem-pair">
-      <div class="problem-card">
-        <span class="problem-label problem">❌ Problem</span>
-        <span class="problem-icon">🗑</span>
-        <h3>Waste is costing you more than you think</h3>
-        <p>No record of what's thrown away or why. No visibility into whether it's prep waste, spoilage, or over-production. It just disappears from the fridge.</p>
-      </div>
-      <div class="problem-card" style="border-top:none; border-radius: 0 0 16px 16px; background: rgba(34,197,94,0.03); border-color: rgba(34,197,94,0.15);">
-        <span class="problem-label solution">✓ GastroCore</span>
-        <p>Log every waste event with reason and cost. Spot patterns — which ingredients waste most, which days, which reasons. Track the financial impact and reduce it over time.</p>
-      </div>
-    </div>
-
-    <div class="problem-pair">
-      <div class="problem-card">
-        <span class="problem-label problem">❌ Problem</span>
-        <span class="problem-icon">⚠️</span>
-        <h3>Allergen records aren't EHO-ready</h3>
-        <p>Natasha's Law requires full allergen labelling. Most kitchens still rely on memory, sticky notes, or an outdated spreadsheet that nobody updates.</p>
-      </div>
-      <div class="problem-card" style="border-top:none; border-radius: 0 0 16px 16px; background: rgba(34,197,94,0.03); border-color: rgba(34,197,94,0.15);">
-        <span class="problem-label solution">✓ GastroCore</span>
-        <p>All 14 UK allergens tracked per recipe. Generate allergen PDFs for front-of-house instantly. Full batch traceability for every ingredient — EHO-ready at any time.</p>
-      </div>
-    </div>
+    </a>
 
   </div>
-</section>
 
-<!-- ── LOGOS BAR ── -->
-<div class="logos-bar reveal">
-  <p>Trusted by forward-thinking UK restaurants</p>
-  <div class="logos-row">
-    <span class="logo-item">🍽 Fine Dining</span>
-    <span class="logo-item">🍕 Casual Dining</span>
-    <span class="logo-item">☕ Cafés</span>
-    <span class="logo-item">🥡 Takeaways</span>
-    <span class="logo-item">🍺 Pubs & Bars</span>
-  </div>
-</div>
-
-<!-- ── HOW IT WORKS ── -->
-<section class="how-it-works" id="how-it-works">
-  <div class="reveal">
-    <p class="section-label">How it works</p>
-    <h2 class="section-title">Up and running in minutes.</h2>
-    <p class="section-subtitle">No training. No onboarding calls. No setup fees. Just open the app and start.</p>
-  </div>
-
-  <div class="steps reveal">
-    <div class="step">
-      <div class="step-number">01</div>
-      <div class="step-content">
-        <h3>Create your account</h3>
-        <p>Sign up free — no credit card needed. Your 14-day trial starts immediately with access to every feature from day one.</p>
-        <div class="step-time">⏱ Under 1 minute</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-number">02</div>
-      <div class="step-content">
-        <h3>Add your ingredients</h3>
-        <p>Enter your ingredients with supplier info, unit cost, and minimum stock levels. Set allergen flags once and they carry through to every recipe automatically.</p>
-        <div class="step-time">⏱ 2–3 minutes</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-number">03</div>
-      <div class="step-content">
-        <h3>Build your recipes</h3>
-        <p>Add ingredients to each recipe. GastroCore calculates food cost, margin, and VAT in real time. Generate a PDF allergen card in one click.</p>
-        <div class="step-time">⏱ 1 minute per recipe</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-number">04</div>
-      <div class="step-content">
-        <h3>Track stock daily</h3>
-        <p>Log production, purchases, and waste. Stock updates automatically. Get alerts before you run out. See your food costs in real time — not at month-end.</p>
-        <div class="step-time">⏱ 2 minutes a day</div>
-      </div>
+  <div class="note">
+    <div class="note-icon">💡</div>
+    <div class="note-text">
+      <strong>Como usar:</strong> mantenha os 4 arquivos (<code>cliente.html</code>, <code>admin.html</code>, <code>cozinha.html</code> e <code>shared.js</code>) na mesma pasta que este arquivo.
+      Abra o <strong>Cardápio</strong> no celular do cliente, o <strong>Admin</strong> no iPad da confeitaria e a <strong>TV</strong> no televisor da cozinha.
+      Os pedidos se comunicam em tempo real entre as telas. Para funcionar entre dispositivos diferentes, hospede os arquivos online.
     </div>
   </div>
-</section>
 
-<!-- ── SUITE ── -->
-<section class="suite" id="suite">
-  <div class="reveal">
-    <p class="section-label">The GastroCore Suite</p>
-    <h2 class="section-title">Two products. One restaurant.</h2>
-    <p class="section-subtitle">NEXUS POS runs your floor. NEXUS Stock runs your kitchen. Together, total control.</p>
+  <div class="footer">
+    <div class="divider"></div>
+    Eu Mereço Doce · Londrina · <span>Sistema v3.0</span>
   </div>
-  <div class="suite-grid reveal">
-    <div class="suite-card nexus">
-      <div style="margin-bottom:1.2rem;">
-        <span class="suite-tag nexus-t">NEXUS POS</span>
-        <span class="suite-tag soon">Launching soon</span>
-      </div>
-      <h3>NEXUS POS</h3>
-      <p class="tagline">Front of house · Ordering · POS · Payments</p>
-      <p>Customers scan a QR code, browse your menu and pay from their phone. Orders go straight to the kitchen with a sound alert. No tablets. No apps. No missed orders.</p>
-      <ul class="suite-features">
-        <li>QR digital menu per table</li>
-        <li>Kitchen & bar screens with real-time orders</li>
-        <li>Staff POS for walk-in and dine-in</li>
-        <li>Online payments via Stripe · Split bill</li>
-        <li>Live dashboard & Google Reviews</li>
-        <li>Zero commission on every sale</li>
-      </ul>
-      <div class="suite-price">£79<span>/month</span></div>
-      <span style="display:block; text-align:center; padding:0.85rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); color:#475569; font-size:0.9rem; cursor:not-allowed;">Coming soon</span>
-    </div>
-    <div class="suite-card nexus-stock">
-      <div style="margin-bottom:1.2rem;">
-        <span class="suite-tag nexus-stock-t">NEXUS Stock</span>
-        <span class="suite-tag live">Available now</span>
-      </div>
-      <h3>NEXUS Stock</h3>
-      <p class="tagline">Stock control · Inventory · Alerts · Costing</p>
-      <p>Know exactly what is in your kitchen at all times. NEXUS Stock tracks ingredients, fires low-stock alerts before you run out, and shows your real food cost per dish.</p>
-      <ul class="suite-features">
-        <li>Real-time ingredient tracking</li>
-        <li>Low-stock alerts & reorder suggestions</li>
-        <li>Recipe costing — food cost per dish</li>
-        <li>Waste tracking & supplier log</li>
-        <li>Full allergen compliance — Natasha's Law</li>
-        <li>Batch traceability & EHO-ready reports</li>
-      </ul>
-      <div class="suite-price">£59<span>/month</span></div>
-      <a href="https://app.gastrocore.co.uk/registro" style="display:block; text-align:center; padding:0.85rem; border-radius:8px; background:#3b82f6; color:white; text-decoration:none; font-weight:500;">Start free 14-day trial →</a>
-    </div>
-  </div>
-  <div class="suite-bundle reveal">
-    <div class="bundle-left">
-      <h4>Bundle: NEXUS POS + NEXUS Stock together</h4>
-      <p>Fully integrated. When a NEXUS POS order is placed, NEXUS Stock deducts stock automatically.</p>
-    </div>
-    <div style="text-align:right;">
-      <div class="bundle-price">£119<span>/month</span></div>
-      <div class="bundle-save">Save £19/month vs buying separately</div>
-      <span style="display:inline-flex; margin-top:0.8rem; padding:0.7rem 1.4rem; border-radius:8px; background:#1e293b; color:#475569; font-size:0.875rem; cursor:not-allowed;">Coming soon</span>
-    </div>
-  </div>
-</section>
 
-<!-- ── COMPARISON (updated competitors) ── -->
-<section class="comparison">
-  <div class="reveal">
-    <p class="section-label">vs competitors</p>
-    <h2 class="section-title">Why GastroCore wins.</h2>
-    <p class="section-subtitle">More features, lower cost, built for UK compliance.</p>
-  </div>
-  <div class="reveal" style="overflow-x:auto;">
-    <table class="comparison-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th class="hl">GastroCore</th>
-          <th>MarketMan</th>
-          <th>Jelly UK</th>
-          <th>Lightspeed</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Real-time stock control</td><td class="hl chk">✓</td><td class="chk">✓</td><td class="chk">✓</td><td>Add-on</td></tr>
-        <tr><td>Recipe costing</td><td class="hl chk">✓</td><td class="chk">✓</td><td class="chk">✓</td><td class="crs">—</td></tr>
-        <tr><td>Natasha's Law compliance</td><td class="hl chk">✓</td><td class="crs">—</td><td class="crs">—</td><td class="crs">—</td></tr>
-        <tr><td>Batch traceability</td><td class="hl chk">✓</td><td>Partial</td><td class="crs">—</td><td class="crs">—</td></tr>
-        <tr><td>EHO-ready reports</td><td class="hl chk">✓</td><td class="crs">—</td><td class="crs">—</td><td class="crs">—</td></tr>
-        <tr><td>Free trial (no card)</td><td class="hl chk">✓ 14 days</td><td class="crs">—</td><td class="crs">—</td><td>14 days (card req.)</td></tr>
-        <tr><td>No contract</td><td class="hl chk">✓</td><td class="crs">Annual only</td><td class="crs">Annual only</td><td class="crs">Annual only</td></tr>
-        <tr><td>Setup time</td><td class="hl" style="color:#22c55e;font-weight:600;">Under 5 min</td><td>Days–weeks</td><td>Days</td><td>Days–weeks</td></tr>
-        <tr><td>Monthly price (from)</td><td class="hl" style="color:#22c55e;font-weight:700;">£59</td><td>£150+</td><td>£99+</td><td>£200+</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ── FEATURES ── -->
-<section class="features" id="features">
-  <div class="reveal">
-    <p class="section-label">Everything you need</p>
-    <h2 class="section-title">Your kitchen. Under control.</h2>
-    <p class="section-subtitle">Built from the ground up for UK hospitality — not adapted from a generic inventory tool.</p>
-  </div>
-  <div class="features-grid reveal">
-    <div class="feature-card">
-      <div class="feature-icon">📦</div>
-      <h3>Ingredient Management</h3>
-      <p>Track stock levels in real time. Set minimum quantities, get low-stock alerts by email, and manage expiry dates automatically.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📋</div>
-      <h3>Recipe Costing</h3>
-      <p>Calculate recipe costs automatically. Track margins, apply VAT (20% hot / 0% cold & takeaway), and generate PDF recipe cards with allergens.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🏷</div>
-      <h3>14 UK Allergens</h3>
-      <p>Full Natasha's Law compliance. Flag all 14 mandatory allergens per recipe. Generate allergen reports for your front-of-house team.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">♻️</div>
-      <h3>Food Waste Tracking</h3>
-      <p>Log waste with reasons and costs. Spot patterns, reduce losses, and improve profitability — one of the biggest hidden cost leaks in hospitality.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🛒</div>
-      <h3>Purchase Orders</h3>
-      <p>Create purchase orders, receive stock, and auto-update inventory. Smart suggestions based on minimum stock levels and usage history.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔍</div>
-      <h3>Batch Traceability</h3>
-      <p>Track every batch from supplier to plate. Full audit trail for food safety inspections and allergen investigations.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Reports & Analytics</h3>
-      <p>Consumption reports, margin analysis, low-stock summaries, and cost breakdowns — everything your accountant and EHO will love.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">👥</div>
-      <h3>Team Management</h3>
-      <p>Invite your team with role-based permissions. Owner, manager, and staff roles with granular access control. No extra charge per user.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📧</div>
-      <h3>Email Alerts</h3>
-      <p>Automated alerts for low stock, expiring ingredients, and batch recalls. Stay informed without logging in every day.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── COMPLIANCE ── -->
-<section class="compliance">
-  <div class="compliance-inner reveal">
-    <div>
-      <div class="compliance-badge">✓ Natasha's Law Compliant</div>
-      <p class="section-label">UK Compliance</p>
-      <h2>Built around<br />Natasha's Law</h2>
-      <p style="margin-top:1rem;">Since October 2021, Natasha's Law requires all UK food businesses to label every pre-packaged item with a full ingredient list and clear allergen information. Non-compliance risks serious fines — and serious harm. GastroCore makes full compliance straightforward and automatic.</p>
-      <p style="margin-top:1rem;">Every recipe you build automatically inherits allergen flags from its ingredients. No manual tracking. No spreadsheets. No risk of missing an update.</p>
-    </div>
-    <ul class="compliance-list">
-      <li>All 14 mandatory UK allergens tracked per recipe</li>
-      <li>Allergen PDF reports for front-of-house — one click</li>
-      <li>Batch traceability for full supplier-to-plate audit trail</li>
-      <li>VAT correctly applied (20% hot / 0% cold & takeaway)</li>
-      <li>Supplier records linked to every ingredient</li>
-      <li>Expiry date tracking with automated email alerts</li>
-      <li>EHO-ready reports generated instantly at any time</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── TRUST BADGES ── -->
-<div class="trust-badges reveal">
-  <div class="badges-row">
-    <div class="badge"><span class="badge-icon">✅</span> Natasha's Law Compliant</div>
-    <div class="badge"><span class="badge-icon">🔒</span> GDPR Compliant</div>
-    <div class="badge"><span class="badge-icon">💳</span> Secure payments via Stripe</div>
-    <div class="badge"><span class="badge-icon">🇬🇧</span> UK-based support</div>
-    <div class="badge"><span class="badge-icon">🛡</span> Data encrypted & backed up daily</div>
-    <div class="badge"><span class="badge-icon">🚫</span> Zero commission</div>
-  </div>
-</div>
-
-<!-- ── PRICING ── -->
-<section class="pricing" id="pricing">
-  <div class="reveal">
-    <p class="section-label">Simple pricing</p>
-    <h2 class="section-title" style="margin:0 auto 1rem;">One plan. Everything included.</h2>
-    <p class="section-subtitle" style="margin:0 auto;">No hidden fees. No feature tiers. Every GastroCore feature is included from day one.</p>
-  </div>
-  <div class="pricing-grid reveal">
-    <!-- Monthly -->
-    <div class="pricing-card">
-      <p class="pricing-plan">Monthly</p>
-      <div class="pricing-price">£59<span>/mo</span></div>
-      <p class="pricing-vat">VAT included</p>
-      <hr class="pricing-divider" />
-      <ul class="pricing-features">
-        <li>Unlimited ingredients</li>
-        <li>Recipes + PDF + Allergens</li>
-        <li>Food Waste tracking</li>
-        <li>Purchase orders</li>
-        <li>Batch traceability</li>
-        <li>Full reports</li>
-        <li>Email alerts</li>
-        <li>Team management (unlimited users)</li>
-      </ul>
-      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-ghost">Start free trial</a>
-    </div>
-    <!-- Annual -->
-    <div class="pricing-card featured">
-      <div class="pricing-badge">SAVE 25%</div>
-      <p class="pricing-plan">Annual</p>
-      <div class="pricing-price">£531<span>/yr</span></div>
-      <p class="pricing-vat">VAT included</p>
-      <p class="pricing-equiv">Equivalent to £44.25/mo</p>
-      <hr class="pricing-divider" />
-      <ul class="pricing-features">
-        <li>Unlimited ingredients</li>
-        <li>Recipes + PDF + Allergens</li>
-        <li>Food Waste tracking</li>
-        <li>Purchase orders</li>
-        <li>Batch traceability</li>
-        <li>Full reports</li>
-        <li>Email alerts</li>
-        <li>Team management (unlimited users)</li>
-      </ul>
-      <a href="https://app.gastrocore.co.uk/registro" class="pricing-cta pricing-cta-primary">Start free trial →</a>
-    </div>
-  </div>
-  <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-dim);">14-day free trial on all plans · No credit card required · Cancel anytime · No contracts</p>
-</section>
-
-<!-- ── FAQ ── -->
-<section class="faq" id="faq">
-  <div class="reveal">
-    <p class="section-label">Questions</p>
-    <h2 class="section-title">Frequently asked</h2>
-  </div>
-  <div class="faq-list reveal">
-
-    <div class="faq-item">
-      <button class="faq-question">Do I need a credit card to start? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>No. Your 14-day free trial starts immediately with no payment details required. You only need to subscribe if you want to continue after your trial ends.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">How long does setup take? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Less than 5 minutes. Create your account, add your first ingredients, and build your first recipe — all in one sitting. No onboarding calls, no training, no setup fees. Just open the app and start.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Does it work on mobile? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Yes. GastroCore is fully responsive and works on any device — phone, tablet, or desktop. Log waste, check stock levels, and manage your team from the kitchen floor.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Is GastroCore compliant with Natasha's Law? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Yes. GastroCore tracks all 14 mandatory UK allergens per recipe and generates allergen PDF reports for your team and customers. Allergen flags are set per ingredient and carry through to every recipe automatically — no manual tracking needed.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Is my data secure? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Yes. GastroCore runs on enterprise-grade infrastructure (Render + PostgreSQL) with encrypted connections and secure JWT authentication. Your data is backed up automatically every day and is never shared with third parties.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Can I import my ingredients from a spreadsheet? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Bulk import from spreadsheet is on our roadmap and coming soon. In the meantime, adding ingredients manually takes around 30 seconds each — most restaurants are fully set up within one session.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">How is VAT handled? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>GastroCore automatically applies the correct UK VAT rate per recipe — 20% for hot food and 0% for cold food and takeaways. This is reflected in your recipe costing and margin reports.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Can I invite my team? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Yes. Invite unlimited team members at no extra cost with role-based permissions — Owner, Manager, or Staff. Each role has appropriate access to features and data. Staff can log waste and view stock; managers get full operational access; owners see everything.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">Can I cancel anytime? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>Absolutely. Cancel anytime from the billing portal inside GastroCore. No long-term contracts, no cancellation fees, no questions asked.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">What is NEXUS POS? <span class="faq-icon">+</span></button>
-      <div class="faq-answer"><p>NEXUS POS is our digital ordering and table management platform launching soon. Customers scan a QR code, browse your menu and pay from their phone. Orders go to the kitchen screen automatically. Zero commission on every sale.</p></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── FINAL CTA ── -->
-<section class="cta-section">
-  <div class="cta-glow"></div>
-  <div class="reveal">
-    <h2>Ready to take control<br />of your kitchen?</h2>
-    <p>Join UK restaurants that have already switched from guesswork to GastroCore.</p>
-    <a href="https://app.gastrocore.co.uk/registro" class="btn-primary" style="font-size:1.05rem; padding:0.95rem 2.4rem;">Start your free 14-day trial →</a>
-    <div class="cta-trust">
-      <div class="cta-trust-item">✓ No credit card needed</div>
-      <div class="cta-trust-item">✓ Setup in under 5 minutes</div>
-      <div class="cta-trust-item">✓ Cancel anytime</div>
-      <div class="cta-trust-item">✓ UK-based support</div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">GASTRO<span>CORE</span></div>
-  <ul class="footer-links">
-    <li><a href="#suite">Suite</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://app.gastrocore.co.uk/login">Sign in</a></li>
-    <li><a href="mailto:hello@gastrocore.co.uk">Contact</a></li>
-  </ul>
-  <p class="footer-copy">© 2026 GastroCore · gastrocore.co.uk · All rights reserved</p>
-</footer>
-
-<script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ── LIVE DASHBOARD ANIMATION ──
-  (function() {
-    // KPI states — each tick picks a slightly different value
-    var fc    = 32.0,  waste = 120, stock = 4320, lowItems = 3;
-    var fcDir = -1,    wasteDir = 1;
-
-    // Bar chart heights (%)
-    var bars = [55,72,48,85,63,100,52];
-
-    // Alert pool — rotates in/out
-    var alertPool = [
-      {cls:'red',   icon:'⚠',  title:'Low stock: Chicken Breast', sub:'2 kg left · min 5 kg'},
-      {cls:'red',   icon:'⚠',  title:'Low stock: Olive Oil',      sub:'0.5 L left · min 2 L'},
-      {cls:'yellow',icon:'🔔', title:'Milk expires tomorrow',      sub:'6 L · 16 May 2026'},
-      {cls:'yellow',icon:'🔔', title:'Cream expires in 2 days',    sub:'2 L · 17 May 2026'},
-      {cls:'blue',  icon:'📋', title:'Purchase order suggested',   sub:'3 items below reorder level'},
-      {cls:'green-a',icon:'✅',title:'Stock received: Beef Mince', sub:'10 kg · Prime Meats'},
-      {cls:'blue',  icon:'📋', title:'Recipe cost updated',        sub:'Salmon Fillet · margin 64%'},
-      {cls:'yellow',icon:'🔔', title:'Lamb Shank expires in 3 days',sub:'4 kg · 19 May 2026'},
-    ];
-    var alertOffset = 0;
-
-    // Table rows
-    var tableData = [
-      {name:'Chicken Breast', stock:2,   unit:'kg', cost:'£6.80/kg', supplier:'Fresh Direct', status:'r', label:'Low stock'},
-      {name:'Beef Mince',     stock:8,   unit:'kg', cost:'£5.20/kg', supplier:'Prime Meats',  status:'g', label:'OK'},
-      {name:'Whole Milk',     stock:6,   unit:'L',  cost:'£0.90/L',  supplier:'Dairy Co.',    status:'y', label:'Expiring'},
-      {name:'Olive Oil',      stock:0.5, unit:'L',  cost:'£4.50/L',  supplier:'Medfoods',     status:'r', label:'Low stock'},
-      {name:'Pasta (Penne)',  stock:12,  unit:'kg', cost:'£1.20/kg', supplier:'Wholesale UK', status:'g', label:'OK'},
-    ];
-
-    function rnd(min, max) { return Math.random() * (max - min) + min; }
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
-    function fadeUpdate(el, newVal, duration) {
-      if (!el) return;
-      el.style.transition = 'opacity ' + (duration/2) + 'ms ease';
-      el.style.opacity = '0.3';
-      setTimeout(function() {
-        el.textContent = newVal;
-        el.style.opacity = '1';
-      }, duration / 2);
-    }
-
-    function tick() {
-      // ── Food Cost ──
-      fc += fcDir * rnd(0.1, 0.4);
-      if (fc > 34.5) fcDir = -1;
-      if (fc < 29.5) fcDir = 1;
-      var fcEl    = document.getElementById('kpi-fc-val');
-      var fcBadge = document.getElementById('kpi-fc-badge');
-      var fcCard  = document.getElementById('kpi-fc');
-      if (fcEl) fcEl.textContent = fc.toFixed(1) + '%';
-      if (fcBadge) {
-        var good = fc < 32;
-        fcBadge.className = 'ds-kbadge ' + (good ? 'up' : 'dn');
-        fcBadge.textContent = good ? '↓ Below target' : '↑ Above target';
-        if (fcCard) fcCard.className = 'ds-kpi ' + (good ? 'good' : 'danger');
-      }
-
-      // ── Waste ──
-      waste += wasteDir * rnd(1, 4);
-      if (waste > 148) wasteDir = -1;
-      if (waste < 95)  wasteDir = 1;
-      var wEl = document.getElementById('kpi-waste-val');
-      if (wEl) wEl.textContent = '£' + Math.round(waste);
-
-      // ── Stock Value ──
-      stock += rnd(-15, 25);
-      var sEl = document.getElementById('kpi-stock-val');
-      if (sEl) sEl.textContent = '£' + Math.round(stock).toLocaleString();
-
-      // ── Bars ──
-      for (var i = 0; i < 7; i++) {
-        var bar = document.getElementById('bar-' + i);
-        if (bar) {
-          bars[i] = Math.min(100, Math.max(20, bars[i] + rnd(-6, 6)));
-          bar.style.height = bars[i].toFixed(0) + '%';
-          var isHigh = bars[i] > 75;
-          bar.style.background = isHigh ? '#3b82f6' : 'rgba(59,130,246,0.4)';
-        }
-      }
-
-      // ── Table stock values drift ──
-      var stockDrift = [rnd(-0.3,0.3), rnd(-0.5,0.5), rnd(-0.2,0.2), rnd(-0.05,0.05), rnd(-0.8,0.8)];
-      for (var j = 0; j < 5; j++) {
-        tableData[j].stock = Math.max(0.1, tableData[j].stock + stockDrift[j]);
-        var tdS = document.getElementById('td-s' + j);
-        if (tdS) tdS.textContent = tableData[j].stock.toFixed(1) + ' ' + tableData[j].unit;
-      }
-    }
-
-    // Alert rotation — swap one alert every 4s
-    function rotateAlert() {
-      var container = document.getElementById('ds-alerts');
-      if (!container) return;
-      var items = container.querySelectorAll('.ds-alert');
-      if (!items.length) return;
-
-      // pick a random alert item to replace
-      var idx = Math.floor(Math.random() * items.length);
-      var el  = items[idx];
-      var next = alertPool[(alertOffset + items.length) % alertPool.length];
-      alertOffset++;
-
-      // fade out
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(-4px)';
-
-      setTimeout(function() {
-        el.className = 'ds-alert ' + next.cls;
-        el.innerHTML =
-          '<div class="ds-aico ' + next.cls + '">' + next.icon + '</div>' +
-          '<div><div class="ds-atitle">' + next.title + '</div>' +
-          '<div class="ds-asub">' + next.sub + '</div></div>';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 650);
-    }
-
-    // Add transition to ds-alert for smooth swap
-    var styleEl = document.createElement('style');
-    styleEl.textContent = '.ds-alert { transition: opacity 0.6s ease, transform 0.6s ease; } .ds-kval { transition: opacity 0.4s ease; }';
-    document.head.appendChild(styleEl);
-
-    // Run
-    setInterval(tick, 2800);
-    setInterval(rotateAlert, 4200);
-
-    // Stagger first tick slightly
-    setTimeout(tick, 1200);
-  })();
-
-
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-</script>
 </body>
 </html>
